@@ -58,11 +58,11 @@ Call the `personal-config` subagent with `action=read` before doing anything els
 9. Get the total strategy count from Phase 2.
 
 10. Call `report-generator` subagent: `action=skeleton`, `total_strategies=N`
-    This creates the initial live progress HTML at `docs/index.html`.
+    This creates the initial live progress HTML at `data/reports/index.html`.
 
 11. Spawn `backtest` subagents concurrently — up to max_workers at a time.
     Each call receives: `strategy_index=N`, `total_strategies=T`
-    Each backtest agent writes its result to `data/results/` and updates `docs/index.html`.
+    Each backtest agent writes its result to `data/results/` and updates `data/reports/index.html`.
 
 12. Collect results. Note any failures but continue with the remaining strategies.
 
@@ -72,7 +72,7 @@ Call the `personal-config` subagent with `action=read` before doing anything els
 
 14. Present the user with:
     - Top 3 strategies: label, CAGR, Sharpe, Max Drawdown
-    - Full report path: `docs/index.html`
+    - Full report path: `data/reports/index.html`
     - Any failed or disqualified strategies
 
 ## Error Handling

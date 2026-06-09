@@ -5,6 +5,6 @@ The orchestration agent will:
 2. Ask about any missing fields (age, risk tolerance, account type)
 3. Select and optionally generate strategies for your constraints
 4. Run all backtests in parallel
-5. Generate docs/index.html with ranked results
+5. Generate data/reports/index.html with ranked results
 
 Pass any context upfront: "Find the best strategies for my 401k. I am 40, moderate risk."

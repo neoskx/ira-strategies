@@ -1,4 +1,6 @@
-data/
+data/*
+!data/reports/
+!data/reports/**
 __pycache__/
 *.pyc
 *.pkl

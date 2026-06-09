@@ -23,7 +23,7 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 AGENTS_DIR = PROJECT_ROOT / "agents"
 DATA_DIR = PROJECT_ROOT / "data"
 RESULTS_DIR = DATA_DIR / "results"
-REPORT_OUTPUT = PROJECT_ROOT / "docs" / "index.html"
+REPORT_OUTPUT = PROJECT_ROOT / "data" / "reports" / "index.html"
 
 
 def _py(agent: str, script: str, *args) -> subprocess.CompletedProcess:

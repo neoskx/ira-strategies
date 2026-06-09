@@ -17,15 +17,20 @@ This project uses a 6-agent system for 401k strategy optimization. The agents ar
 | `strategy` | `agents/strategy/` | Selects + generates strategies by user constraints |
 | `data-retriever` | `agents/data-retriever/` | Ensures price cache is fresh |
 | `backtest` | `agents/backtest/` | Runs one strategy; updates live HTML |
-| `report-generator` | `agents/report-generator/` | Creates and finalizes `docs/index.html` |
+| `report-generator` | `agents/report-generator/` | Creates and finalizes `data/reports/index.html` |
 
 **To run:** In Claude Code say "build 401k strategies for [my profile]" or use `/find-best`.
 In Codex CLI, address the `orchestration` agent by name.
 
-### Shared state (all gitignored, in `data/`)
+### Shared State
+
+Most runtime state is gitignored under `data/`. The exception is
+`data/reports/`, which contains the committed static report for GitHub Pages.
+
 - `data/user_profile.yaml` — user's retirement profile
 - `data/results/*.json` — one JSON file per completed backtest
 - `data/prices.pkl` — yfinance price cache
+- `data/reports/index.html` — generated final report, committed for publishing
 
 ### Agent self-containment principle
 
@@ -75,9 +80,9 @@ agents/
   strategy/                 ← self-contained strategy catalog + filter logic
   data-retriever/           ← self-contained yfinance cache manager
   backtest/                 ← self-contained executable backtesting core
-  report-generator/         ← self-contained HTML report generator
-docs/index.html             ← generated report
-data/                       ← gitignored shared state
+  report-generator/         <- self-contained HTML report generator
+data/reports/index.html     <- generated final report, committed for Pages
+data/                       <- runtime state; reports subdirectory is tracked
 ```
 
 ## Golden Rules
@@ -88,7 +93,7 @@ data/                       ← gitignored shared state
    account numbers, portfolio values, or any personal financial information.
 4. **Tests are truth** — agent changes must pass the relevant `python agents/...` or
    `node agents/...` script, plus the orchestrator dry run when workflow behavior changes.
-5. **docs/ is generated** — never manually edit `docs/index.html` or chart files.
+5. **Reports are generated** — never manually edit `data/reports/index.html`.
    They are overwritten by `agents/report-generator/generate_report.js`.
 
 ## How to Add a New Strategy
@@ -116,7 +121,11 @@ agent unless they are extracted into a real package dependency.
 ## Running Locally
 
 ```bash
-pip install -r requirements.txt
+pip install -r agents/personal-config/requirements.txt
+pip install -r agents/strategy/requirements.txt
+pip install -r agents/data-retriever/requirements.txt
+pip install -r agents/backtest/requirements.txt
+pip install -r agents/orchestration/requirements.txt
 python agents/orchestration/orchestrate.py run --dry-run
 python agents/orchestration/orchestrate.py run
 ```
@@ -129,19 +138,20 @@ handles the new JSON field.
 
 ## Report
 
-`agents/report-generator/generate_report.js` builds `docs/index.html` from
+`agents/report-generator/generate_report.js` builds `data/reports/index.html` from
 `data/results/*.json`.
 
 ## GitHub Actions
 
-The workflow in `.github/workflows/backtest.yml`:
-- Runs monthly (1st of each month)
-- Runs on every push to main
-- Downloads fresh data (no cache in CI)
-- Commits updated docs/ back to main
-- Deploys docs/ to GitHub Pages
+The workflow in `.github/workflows/pages.yml`:
+- Runs on pushes to `main` that change `data/reports/**`
+- Can be triggered manually
+- Publishes `data/reports/` to GitHub Pages
+- Does not run backtests
 
-To trigger manually: GitHub UI → Actions → Monthly Backtest & Deploy → Run workflow.
+Backtests are local/agent-driven because they depend on user profile state,
+network data freshness, and agent orchestration. Commit `data/reports/index.html`
+after a trusted local run, then the Pages workflow publishes it.
 
 ## Key Design Decisions
 
@@ -152,12 +162,14 @@ To trigger manually: GitHub UI → Actions → Monthly Backtest & Deploy → Run
 - **No look-ahead bias**: backtest strategies only use prices up to `as_of`.
 - **Zero cost assumption**: Appropriate for IRA/Roth IRA. Do not add transaction costs
   without making it a configuration option.
-- **GitHub Pages**: Report is a single `docs/index.html`.
+- **GitHub Pages**: Report is a single `data/reports/index.html`.
 
 ## Dependency Management
 
-Add new packages to `requirements.txt`. Use `>=` version pins, not `==`.
-Do not add packages without a clear reason — keep the dependency list minimal.
+Add new Python packages to the owning agent's `requirements.txt`. Add JavaScript
+packages to the owning agent's `package.json`. Use `>=` version pins for Python,
+not `==`. Do not add packages without a clear reason — keep each agent dependency
+list minimal.
 
 ## Future Features (v2)
 

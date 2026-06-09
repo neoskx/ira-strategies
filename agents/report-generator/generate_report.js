@@ -2,7 +2,7 @@
 /**
  * Report generator agent — builds an interactive HTML report from backtest results.
  *
- * Reads data/results/*.json and writes docs/index.html with:
+ * Reads data/results/*.json and writes data/reports/index.html with:
  * - Live progress bar (auto-refresh until --final)
  * - Interactive Chart.js equity curves for top 5 strategies
  * - Sortable results table with all metrics
@@ -11,7 +11,7 @@
  * Usage:
  *   node generate_report.js --results-dir data/results --total 17
  *   node generate_report.js --results-dir data/results --total 17 --final
- *   node generate_report.js --results-dir data/results --total 17 --final --output docs/index.html
+ *   node generate_report.js --results-dir data/results --total 17 --final --output data/reports/index.html
  */
 'use strict';
 
@@ -26,7 +26,7 @@ function parseArgs() {
     resultsDir: 'data/results',
     total: 0,
     final: false,
-    output: 'docs/index.html',
+    output: 'data/reports/index.html',
   };
   for (let i = 0; i < argv.length; i++) {
     switch (argv[i]) {
