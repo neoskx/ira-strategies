@@ -1,0 +1,7 @@
+name = "backtest"
+description = "Runs one strategy backtest by index using the self-contained backtest agent. Saves the result to data/results/. Spawned in parallel by the orchestrator."
+sandbox_mode = "full"
+
+developer_instructions = """
+Read the file `agents/backtest/agents/backtest.md` and follow the steps exactly.
+"""

@@ -1,0 +1,7 @@
+name = "report-generator"
+description = "Generates docs/index.html. Call with action=skeleton before backtests begin. Call with action=finalize after all backtests complete to produce the final ranked report."
+sandbox_mode = "full"
+
+developer_instructions = """
+Read the file `agents/report-generator/agents/report-generator.md` and follow the instructions exactly.
+"""

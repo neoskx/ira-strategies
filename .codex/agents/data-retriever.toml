@@ -1,0 +1,7 @@
+name = "data-retriever"
+description = "Checks whether price data for all tickers is cached in data/prices.pkl. Downloads missing or stale data. Returns cache status before backtests run."
+sandbox_mode = "full"
+
+developer_instructions = """
+Read the file `agents/data-retriever/agents/data-retriever.md` and follow the steps exactly.
+"""

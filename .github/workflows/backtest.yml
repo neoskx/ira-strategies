@@ -27,10 +27,18 @@ jobs:
           cache: "pip"
 
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        run: |
+          pip install -r requirements.txt
+          pip install -r agents/personal-config/requirements.txt
+          pip install -r agents/strategy/requirements.txt
+          pip install -r agents/data-retriever/requirements.txt
+          pip install -r agents/backtest/requirements.txt
+          pip install -r agents/orchestration/requirements.txt
 
       - name: Run backtests
-        run: python main.py --no-cache    # always fresh data in CI
+        run: |
+          python agents/data-retriever/fetch_data.py refresh
+          python agents/orchestration/orchestrate.py run
 
       - name: Commit docs if changed
         run: |

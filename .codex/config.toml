@@ -1,0 +1,4 @@
+[agents]
+max_threads = 6                  # max parallel backtest agents
+max_depth = 1                    # orchestrator → workers only, no deeper nesting
+job_max_runtime_seconds = 1800   # 30 min per worker (full backtest can be slow)

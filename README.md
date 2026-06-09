@@ -1,85 +1,125 @@
 # IRA Strategies
 
-**Backtest and optimize investment strategies for self-directed tax-advantaged retirement accounts.**
+Agent-driven 401k strategy optimization for self-directed retirement accounts.
 
-> Built for accounts where rebalancing is free — Traditional IRA, Roth IRA, Solo 401k at
-> brokerages like Robinhood, Fidelity, Schwab, etc.
+This repo is intended to be run through Claude Code or Codex. Each agent is
+self-contained: it owns the code it executes and communicates through `data/`
+artifacts instead of importing shared repo modules.
 
-**[📊 View Latest Backtest Report](https://neoskx.github.io/ira-strategies/)**
+## Run
 
----
+In Claude Code:
 
-## What It Does
+```text
+/find-best
+```
 
-1. **You define the asset universe** — any stocks, ETFs in `universe/assets.py`
-2. **It backtests 17+ strategies** across multiple allocation models and rebalancing rules
-3. **Ranked by Sharpe ratio** — best risk-adjusted returns, not just raw returns
-4. **Automatically refreshes** monthly via GitHub Actions → deployed to GitHub Pages
+Or ask:
 
-## Strategy Types
+```text
+Build 401k strategies for my profile.
+```
 
-| Category | Strategies |
-|---|---|
-| **Static** | Fixed weight, Equal weight |
-| **Momentum** | Momentum rotation (top-N), Dual Momentum (Antonacci), Trend following |
-| **Optimization** | Max Sharpe, Min Variance, Risk Parity, Adaptive Asset Allocation |
+In Codex, address the orchestration agent:
 
-## Rebalancing Rules
+```text
+Have orchestration build 401k strategies for a 40-year-old with moderate risk.
+```
 
-- **Calendar**: Monthly / Quarterly / Annual
-- **Threshold**: Rebalance when any asset drifts >5% or >10%
-- **Hybrid**: Calendar check + threshold filter (fewer unnecessary trades)
-
-## Quickstart
+CLI fallback:
 
 ```bash
-git clone https://github.com/neoskx/ira-strategies.git
-cd ira-strategies
-pip install -r requirements.txt
-
-# Run full backtest
-python main.py
-
-# Quick run (subset of strategies, uses cache)
-python main.py --quick
-
-# Force fresh data download
-python main.py --no-cache
+python agents/orchestration/orchestrate.py run
 ```
 
-Open `docs/index.html` in a browser to view the report.
+The workflow writes:
 
-## Customizing Your Universe
+- `data/user_profile.yaml` - retirement profile
+- `data/prices.pkl` - yfinance cache
+- `data/results/*.json` - one result per completed backtest
+- `docs/index.html` - generated report
 
-Edit `universe/assets.py`:
+## Architecture
 
-```python
-ASSETS = [
-    {"ticker": "QQQ",  "name": "Invesco Nasdaq-100 ETF", "category": "Broad ETF"},
-    {"ticker": "SPMO", "name": "S&P 500 Momentum ETF",   "category": "Factor ETF"},
-    # ... add your own
-]
+This project uses an agent-first architecture.
+
+Agents are the microservices. Each agent owns its runtime, prompt, script,
+dependencies, and local implementation details. An agent should be independently
+runnable and replaceable.
+
+Skills are the packages. When behavior needs to be reused across agents, package it
+as a skill or versioned dependency and declare it in the agents that consume it.
+Do not share behavior by importing files across agent directories or from the repo
+root.
+
+```mermaid
+flowchart TD
+    user[Claude Code / Codex] --> orchestration[orchestration agent]
+
+    orchestration --> personal[personal-config agent]
+    orchestration --> strategy[strategy agent]
+    orchestration --> data[data-retriever agent]
+    orchestration --> backtest[backtest agent]
+    orchestration --> report[report-generator agent]
+
+    personal --> profile[(data/user_profile.yaml)]
+    strategy --> selected[(selected strategy list)]
+    data --> prices[(data/prices.pkl)]
+    backtest --> results[(data/results/*.json)]
+    report --> docs[(docs/index.html)]
+
+    skills{{Skills / Packages}} -. shared behavior .-> personal
+    skills -. shared behavior .-> strategy
+    skills -. shared behavior .-> data
+    skills -. shared behavior .-> backtest
+    skills -. shared behavior .-> report
+
+    classDef agent fill:#eef6ff,stroke:#2563eb,stroke-width:1px,color:#111827;
+    classDef artifact fill:#f8fafc,stroke:#64748b,stroke-width:1px,color:#111827;
+    classDef skill fill:#ecfdf5,stroke:#059669,stroke-width:1px,color:#111827;
+
+    class orchestration,personal,strategy,data,backtest,report agent;
+    class profile,selected,prices,results,docs artifact;
+    class skills skill;
 ```
 
-## Key Design Principles
+The only cross-agent contract is explicit data:
 
-- **Zero cost rebalancing** — no transaction costs modeled (correct for IRA/Roth IRA)
-- **No look-ahead bias** — strategies only see data available at each decision point
-- **Transparent** — pure pandas/numpy engine, no black-box framework
-- **Extensible** — abstract `Strategy` base class; swap engines without changing strategy logic
+- CLI arguments
+- process stdout/stderr
+- files under `data/`
+- generated report output under `docs/`
 
-## Default Asset Universe
+## Agents
 
-Broad ETFs (QQQ, VOO, VTI, VXUS), Factor ETFs (SPMO, SCHG, VBR),
-Sector ETFs (VGT, SOXX), Leveraged ETFs (TQQQ, UPRO, TMF),
-Alternatives (GLD, VNQ, BTC-USD), Fixed Income (BND, TLT, SHY),
-Mega-Cap Stocks (AAPL, MSFT, NVDA, AMZN, GOOGL).
+| Agent | Role |
+|---|---|
+| `orchestration` | Coordinates the full workflow |
+| `personal-config` | Reads/writes `data/user_profile.yaml` |
+| `strategy` | Selects strategy candidates from its local catalog |
+| `data-retriever` | Ensures yfinance price cache is available |
+| `backtest` | Runs one strategy using its local backtesting core |
+| `report-generator` | Builds `docs/index.html` from result JSON |
+
+## Self-Containment Rule
+
+Agents must not import implementation modules from the repo root or from sibling
+agents. If logic must be shared, promote it into a skill/package and consume that
+package from each agent. Duplicating code inside an agent is acceptable when it
+preserves independent execution.
+
+## Validation
+
+```bash
+python agents/strategy/select_strategies.py filter --profile data/user_profile.yaml
+python agents/data-retriever/fetch_data.py check
+python agents/backtest/run_backtest.py --index 5 --total 1 --json
+node agents/report-generator/generate_report.js --results-dir data/results --total 1
+python agents/orchestration/orchestrate.py run --dry-run
+python agents/orchestration/orchestrate.py run
+```
 
 ## Disclaimer
 
 Backtests are hypothetical and based on historical data. Past performance does not
-guarantee future results. This is an educational research tool — not financial advice.
-
----
-
-*All code in this repository is AI-generated (vibe coded with [Claude Code](https://claude.ai/code)).*
+guarantee future results. This is an educational research tool, not financial advice.

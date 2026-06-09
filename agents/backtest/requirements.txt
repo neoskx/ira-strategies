@@ -1,0 +1,6 @@
+pandas>=2.0.0
+numpy>=1.26.0
+scipy>=1.11.0
+PyPortfolioOpt>=1.5.5
+yfinance>=0.2.40
+psutil>=5.9.0

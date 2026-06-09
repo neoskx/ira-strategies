@@ -1,0 +1,15 @@
+{
+  "name": "report-generator",
+  "version": "1.0.0",
+  "description": "Generates an interactive HTML report from 401k backtest results. Uses Chart.js via CDN — no npm install required.",
+  "main": "generate_report.js",
+  "scripts": {
+    "generate": "node generate_report.js",
+    "live": "node generate_report.js --results-dir data/results --total 17",
+    "final": "node generate_report.js --results-dir data/results --total 17 --final"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {}
+}

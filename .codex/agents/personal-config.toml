@@ -1,0 +1,7 @@
+name = "personal-config"
+description = "Reads and writes the user's retirement profile in data/user_profile.yaml. Call with action=read to load saved preferences. Call with action=write to update and persist new fields."
+sandbox_mode = "full"
+
+developer_instructions = """
+Read the file `agents/personal-config/agents/personal-config.md` and follow the instructions exactly.
+"""
