@@ -40,27 +40,20 @@ jobs:
           git diff --cached --quiet || git commit -m "chore: update backtest report $(date -u +'%Y-%m-%d')"
           git push
 
-  deploy-pages:
-    needs: backtest
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          ref: main           # pick up the commit from backtest job
-
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: docs/
-
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+  # deploy-pages is enabled once the repo is made public.
+  # GitHub Pages requires a public repo on free plans.
+  # To enable: make repo public → Settings → Pages → Source: Deploy from branch → main /docs
+  #
+  # deploy-pages:
+  #   needs: backtest
+  #   runs-on: ubuntu-latest
+  #   environment:
+  #     name: github-pages
+  #     url: ${{ steps.deployment.outputs.page_url }}
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #       with: { ref: main }
+  #     - uses: actions/configure-pages@v4
+  #     - uses: actions/upload-pages-artifact@v3
+  #       with: { path: docs/ }
+  #     - uses: actions/deploy-pages@v4
