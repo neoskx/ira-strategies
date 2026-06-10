@@ -38,11 +38,13 @@
     .card-metrics { font-size: 0.78rem; color: #4caf50; }
 
     /* Chart */
-    .chart-card { background: white; border-radius: 14px; padding: 1.5rem;
-                  box-shadow: 0 1px 3px rgba(0,0,0,0.07); margin-bottom: 1.5rem; }
+    .chart-card { background: white; border-radius: 14px; padding: 1.5rem 0 0;
+                  box-shadow: 0 1px 3px rgba(0,0,0,0.07); margin-bottom: 1.5rem;
+                  overflow: hidden; }
     .chart-card h2 { font-size: 0.9rem; font-weight: 600; color: #444;
-                     text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1rem; }
-    .chart-wrap { position: relative; height: 320px; }
+                     text-transform: uppercase; letter-spacing: 0.05em;
+                     margin-bottom: 1rem; padding: 0 1.5rem; }
+    .chart-wrap { position: relative; height: 480px; }
 
     /* Table */
     .table-card { background: white; border-radius: 14px; padding: 1.5rem;
@@ -132,6 +134,11 @@
     .guide-meta-item { font-size: 0.75rem; color: #666; }
     .guide-meta-label { font-weight: 600; color: #aaa; text-transform: uppercase;
                         font-size: 0.68rem; letter-spacing: 0.04em; display: block; margin-bottom: 0.1rem; }
+    .guide-description { font-size: 0.82rem; color: #555; line-height: 1.6; margin-bottom: 0.25rem; }
+    .guide-md-link { font-size: 0.68rem; font-weight: 500; color: #2196f3; text-decoration: none;
+                     margin-left: 0.5rem; padding: 1px 5px; border: 1px solid #c8deff;
+                     border-radius: 4px; vertical-align: middle; }
+    .guide-md-link:hover { background: #eef4ff; }
     .guide-universe { margin-bottom: 0.25rem; }
     .guide-universe-label { font-size: 0.76rem; color: #555; display: block; margin-bottom: 0.4rem; font-style: italic; }
     .guide-universe-chips { display: flex; flex-wrap: wrap; gap: 0.3rem; }
@@ -162,49 +169,6 @@
       <div class="progress-bar-bg"><div class="progress-bar-fill"></div></div>
     </div>
 
-    
-  <div class="context-card">
-    <div class="context-section">
-      <div class="context-heading">Investor Profile</div>
-      <div class="profile-grid">
-        <div class="pf-item"><span class="pf-label">Account</span><span class="pf-val">401K</span></div><div class="pf-item"><span class="pf-label">Age</span><span class="pf-val">40</span></div><div class="pf-item"><span class="pf-label">Horizon</span><span class="pf-val">25 years</span></div><div class="pf-item"><span class="pf-label">Risk</span><span class="pf-val">Moderate</span></div><div class="pf-item"><span class="pf-label">Backtest</span><span class="pf-val">10 yr history</span></div>
-      </div>
-    </div>
-    <div class="context-section context-section--wide">
-      <div class="context-heading">Asset Universe (32 instruments)</div>
-      <div class="universe-groups">
-        
-        <div class="asset-group">
-          <span class="asset-cat">Broad ETF</span>
-          <span class="chip" title="Nasdaq-100 — top 100 non-financial US tech stocks">QQQ</span><span class="chip" title="S&P 500 (Vanguard) — 500 largest US companies">VOO</span><span class="chip" title="S&P 500 (SPDR) — most liquid US equity ETF">SPY</span><span class="chip" title="Total US market — large, mid, and small cap">VTI</span><span class="chip" title="International ex-US — developed + emerging markets">VXUS</span><span class="chip" title="Emerging markets — China, India, Brazil, etc.">EEM</span><span class="chip" title="Russell 2000 — US small-cap stocks">IWM</span>
-        </div>
-        <div class="asset-group">
-          <span class="asset-cat">Factor ETF</span>
-          <span class="chip" title="S&P 500 momentum — strongest recent performers">SPMO</span><span class="chip" title="US large-cap growth — high-growth large companies">SCHG</span><span class="chip" title="US small-cap value — cheap small companies">VBR</span>
-        </div>
-        <div class="asset-group">
-          <span class="asset-cat">Sector ETF</span>
-          <span class="chip" title="Information technology sector">VGT</span><span class="chip" title="Semiconductors sector">SOXX</span><span class="chip" title="Energy sector — oil, gas, pipelines">XLE</span><span class="chip" title="Healthcare sector — pharma, biotech, insurance">XLV</span><span class="chip" title="Financials sector — banks, insurance, asset managers">XLF</span>
-        </div>
-        <div class="asset-group">
-          <span class="asset-cat">Leveraged ETF</span>
-          <span class="chip" title="3× Nasdaq-100 — high risk, high reward">TQQQ</span><span class="chip" title="3× S&P 500 — high risk, high reward">UPRO</span><span class="chip" title="3× 20-yr Treasuries — inverse of rate hikes">TMF</span>
-        </div>
-        <div class="asset-group">
-          <span class="asset-cat">Alternative</span>
-          <span class="chip" title="Gold — inflation hedge and safe haven">GLD</span><span class="chip" title="US REITs — real estate income">VNQ</span><span class="chip" title="Broad commodities — oil, metals, agriculture basket">DBC</span><span class="chip" title="Bitcoin — high-volatility digital asset">BTC-USD</span>
-        </div>
-        <div class="asset-group">
-          <span class="asset-cat">Fixed Income</span>
-          <span class="chip" title="Total bond market — investment-grade US bonds">BND</span><span class="chip" title="High-yield bonds — junk bonds, equity-like risk">HYG</span><span class="chip" title="TIPS — Treasury bonds indexed to inflation">TIP</span><span class="chip" title="20-yr Treasuries — rate-sensitive long bonds">TLT</span><span class="chip" title="1-3 yr Treasuries — near-cash, minimal rate risk">SHY</span>
-        </div>
-        <div class="asset-group">
-          <span class="asset-cat">Mega-Cap Stock</span>
-          <span class="chip" title="Apple">AAPL</span><span class="chip" title="Microsoft">MSFT</span><span class="chip" title="Nvidia">NVDA</span><span class="chip" title="Amazon">AMZN</span><span class="chip" title="Alphabet">GOOGL</span>
-        </div>
-      </div>
-    </div>
-  </div>
     
   <div class="cards">
     
@@ -491,14 +455,17 @@
     
   <div class="guide-card">
     <h2>Implementation Guide — Ranked by Sharpe</h2>
-    <p class="guide-intro">Expand each strategy below to see exactly what to buy, when to act, and how to make each trade decision. Strategies are ordered by Sharpe ratio (best risk-adjusted performance first).</p>
+    <p class="guide-intro">Expand each strategy to see what it does, step-by-step instructions, and its full trade history from the backtest. Ranked by Sharpe ratio.</p>
     
     <details class="guide-strategy" open>
       <summary class="guide-summary">
         <div class="guide-summary-left">
           <span class="guide-rank-badge rank-1">🥇</span>
           <div>
-            <div class="guide-strategy-name">AdaptiveAA(top3, 12m mom, 3m vol) | Calendar(monthly)</div>
+            <div class="guide-strategy-name">
+              AdaptiveAA(top3, 12m mom, 3m vol) | Calendar(monthly)
+              <a class="guide-md-link" href="https://github.com/neoskx/ira-strategies/blob/main/data/strategies/16-adaptive-aa-top3/strategy.md" target="_blank" title="View strategy spec">spec&nbsp;↗</a>
+            </div>
             <div class="guide-summary-metrics">
               Sharpe&nbsp;<strong>0.92</strong>
               &nbsp;·&nbsp; CAGR&nbsp;<strong class="pos">29.8%</strong>
@@ -511,15 +478,11 @@
       </summary>
       <div class="guide-body">
         
-        
-        <div class="guide-section-label">Eligible universe</div>
-        <div class="guide-universe">
-          <span class="guide-universe-label">Selects from all 32 instruments — holds top 3 by risk-adjusted momentum</span>
-          <div class="guide-universe-chips"><span class="chip chip--sm" title="Nasdaq-100 ETF">QQQ</span> <span class="chip chip--sm" title="S&P 500 ETF (Vanguard)">VOO</span> <span class="chip chip--sm" title="S&P 500 ETF (SPDR)">SPY</span> <span class="chip chip--sm" title="Total US Market ETF">VTI</span> <span class="chip chip--sm" title="International ex-US ETF">VXUS</span> <span class="chip chip--sm" title="EEM">EEM</span> <span class="chip chip--sm" title="IWM">IWM</span> <span class="chip chip--sm" title="S&P 500 Momentum ETF">SPMO</span> <span class="chip chip--sm" title="Large-Cap Growth ETF">SCHG</span> <span class="chip chip--sm" title="Small-Cap Value ETF">VBR</span> <span class="chip chip--sm" title="Technology Sector ETF">VGT</span> <span class="chip chip--sm" title="Semiconductor ETF">SOXX</span> <span class="chip chip--sm" title="XLE">XLE</span> <span class="chip chip--sm" title="XLV">XLV</span> <span class="chip chip--sm" title="XLF">XLF</span> <span class="chip chip--sm" title="3× Nasdaq-100 (leveraged)">TQQQ</span> <span class="chip chip--sm" title="3× S&P 500 (leveraged)">UPRO</span> <span class="chip chip--sm" title="3× 20-yr Treasury (leveraged)">TMF</span> <span class="chip chip--sm" title="Gold ETF">GLD</span> <span class="chip chip--sm" title="US REIT ETF">VNQ</span> <span class="chip chip--sm" title="DBC">DBC</span> <span class="chip chip--sm" title="Bitcoin">BTC-USD</span> <span class="chip chip--sm" title="Total Bond Market ETF">BND</span> <span class="chip chip--sm" title="HYG">HYG</span> <span class="chip chip--sm" title="TIP">TIP</span> <span class="chip chip--sm" title="20-yr Treasury ETF">TLT</span> <span class="chip chip--sm" title="Short-Term Treasury ETF">SHY</span> <span class="chip chip--sm" title="Apple">AAPL</span> <span class="chip chip--sm" title="Microsoft">MSFT</span> <span class="chip chip--sm" title="Nvidia">NVDA</span> <span class="chip chip--sm" title="Amazon">AMZN</span> <span class="chip chip--sm" title="Alphabet">GOOGL</span></div>
-        </div>
+        <div class="guide-section-label">What it does</div>
+        <p class="guide-description">Adaptive Asset Allocation: select the top 3 funds by risk-adjusted momentum (12m return / 3m volatility), then size them by inverse volatility. Combines momentum selection with risk-parity weighting. Research-backed and typically high Sharpe.</p>
         <div class="guide-section-label">Step-by-step</div>
         <ol class="guide-steps">
-          <li>On the 1st business day of each month, compute a score for each fund: score = (12-month return) ÷ (3-month volatility). Only funds with positive 12-month momentum qualify.</li><li>Keep the top 3 highest-scoring funds. Set each fund's weight proportional to 1 ÷ its 3-month volatility (lower volatility → bigger share). Normalize weights to 100%.</li><li>Sell all funds not in the top 3. Rebalance to the new weights. If fewer than 3 funds have positive momentum, hold <strong>SHY</strong> <span class="ticker-desc">(Short-Term Treasury ETF)</span> for the missing slots.</li>
+          <li>Score all 32 funds: score = 12m return / 3m vol. 2. Keep top 3 with positive momentum. 3. Weight by inverse vol. 4. Sell the rest. Repeat monthly.</li>
         </ol>
         
         <div class="guide-section-label">Trade history (126 rebalances over backtest period)</div>
@@ -1162,8 +1125,7 @@
           </table>
         </div>
         <div class="guide-meta-row">
-          <span class="guide-meta-item"><span class="guide-meta-label">Rebalance frequency</span> monthly</span>
-          <span class="guide-meta-item"><span class="guide-meta-label">Implementation effort</span> Medium-High — needs 12-month return and 3-month volatility per fund monthly</span>
+          <span class="guide-meta-item"><span class="guide-meta-label">Rebalance</span> monthly</span>
         </div>
       </div>
     </details>
@@ -1172,7 +1134,10 @@
         <div class="guide-summary-left">
           <span class="guide-rank-badge rank-2">🥈</span>
           <div>
-            <div class="guide-strategy-name">AdaptiveAA(top5, 12m mom, 3m vol) | Calendar(monthly)</div>
+            <div class="guide-strategy-name">
+              AdaptiveAA(top5, 12m mom, 3m vol) | Calendar(monthly)
+              <a class="guide-md-link" href="https://github.com/neoskx/ira-strategies/blob/main/data/strategies/17-adaptive-aa-top5/strategy.md" target="_blank" title="View strategy spec">spec&nbsp;↗</a>
+            </div>
             <div class="guide-summary-metrics">
               Sharpe&nbsp;<strong>0.82</strong>
               &nbsp;·&nbsp; CAGR&nbsp;<strong class="pos">22.6%</strong>
@@ -1185,15 +1150,11 @@
       </summary>
       <div class="guide-body">
         
-        
-        <div class="guide-section-label">Eligible universe</div>
-        <div class="guide-universe">
-          <span class="guide-universe-label">Selects from all 32 instruments — holds top 5 by risk-adjusted momentum</span>
-          <div class="guide-universe-chips"><span class="chip chip--sm" title="Nasdaq-100 ETF">QQQ</span> <span class="chip chip--sm" title="S&P 500 ETF (Vanguard)">VOO</span> <span class="chip chip--sm" title="S&P 500 ETF (SPDR)">SPY</span> <span class="chip chip--sm" title="Total US Market ETF">VTI</span> <span class="chip chip--sm" title="International ex-US ETF">VXUS</span> <span class="chip chip--sm" title="EEM">EEM</span> <span class="chip chip--sm" title="IWM">IWM</span> <span class="chip chip--sm" title="S&P 500 Momentum ETF">SPMO</span> <span class="chip chip--sm" title="Large-Cap Growth ETF">SCHG</span> <span class="chip chip--sm" title="Small-Cap Value ETF">VBR</span> <span class="chip chip--sm" title="Technology Sector ETF">VGT</span> <span class="chip chip--sm" title="Semiconductor ETF">SOXX</span> <span class="chip chip--sm" title="XLE">XLE</span> <span class="chip chip--sm" title="XLV">XLV</span> <span class="chip chip--sm" title="XLF">XLF</span> <span class="chip chip--sm" title="3× Nasdaq-100 (leveraged)">TQQQ</span> <span class="chip chip--sm" title="3× S&P 500 (leveraged)">UPRO</span> <span class="chip chip--sm" title="3× 20-yr Treasury (leveraged)">TMF</span> <span class="chip chip--sm" title="Gold ETF">GLD</span> <span class="chip chip--sm" title="US REIT ETF">VNQ</span> <span class="chip chip--sm" title="DBC">DBC</span> <span class="chip chip--sm" title="Bitcoin">BTC-USD</span> <span class="chip chip--sm" title="Total Bond Market ETF">BND</span> <span class="chip chip--sm" title="HYG">HYG</span> <span class="chip chip--sm" title="TIP">TIP</span> <span class="chip chip--sm" title="20-yr Treasury ETF">TLT</span> <span class="chip chip--sm" title="Short-Term Treasury ETF">SHY</span> <span class="chip chip--sm" title="Apple">AAPL</span> <span class="chip chip--sm" title="Microsoft">MSFT</span> <span class="chip chip--sm" title="Nvidia">NVDA</span> <span class="chip chip--sm" title="Amazon">AMZN</span> <span class="chip chip--sm" title="Alphabet">GOOGL</span></div>
-        </div>
+        <div class="guide-section-label">What it does</div>
+        <p class="guide-description">Same as AdaptiveAA top3 but holds the top 5 funds. More diversified with slightly different concentration profile.</p>
         <div class="guide-section-label">Step-by-step</div>
         <ol class="guide-steps">
-          <li>On the 1st business day of each month, compute a score for each fund: score = (12-month return) ÷ (3-month volatility). Only funds with positive 12-month momentum qualify.</li><li>Keep the top 5 highest-scoring funds. Set each fund's weight proportional to 1 ÷ its 3-month volatility (lower volatility → bigger share). Normalize weights to 100%.</li><li>Sell all funds not in the top 5. Rebalance to the new weights. If fewer than 5 funds have positive momentum, hold <strong>SHY</strong> <span class="ticker-desc">(Short-Term Treasury ETF)</span> for the missing slots.</li>
+          <li>Score all 32 funds by risk-adjusted momentum. 2. Keep top 5. 3. Weight by inverse vol. 4. Sell the rest. Repeat monthly.</li>
         </ol>
         
         <div class="guide-section-label">Trade history (126 rebalances over backtest period)</div>
@@ -1836,8 +1797,7 @@
           </table>
         </div>
         <div class="guide-meta-row">
-          <span class="guide-meta-item"><span class="guide-meta-label">Rebalance frequency</span> monthly</span>
-          <span class="guide-meta-item"><span class="guide-meta-label">Implementation effort</span> Medium-High — needs 12-month return and 3-month volatility per fund monthly</span>
+          <span class="guide-meta-item"><span class="guide-meta-label">Rebalance</span> monthly</span>
         </div>
       </div>
     </details>
@@ -1846,7 +1806,10 @@
         <div class="guide-summary-left">
           <span class="guide-rank-badge rank-3">🥉</span>
           <div>
-            <div class="guide-strategy-name">MomentumRotation(top5, 12m) | Calendar(monthly)</div>
+            <div class="guide-strategy-name">
+              MomentumRotation(top5, 12m) | Calendar(monthly)
+              <a class="guide-md-link" href="https://github.com/neoskx/ira-strategies/blob/main/data/strategies/10-momentum-rotation-top5/strategy.md" target="_blank" title="View strategy spec">spec&nbsp;↗</a>
+            </div>
             <div class="guide-summary-metrics">
               Sharpe&nbsp;<strong>0.81</strong>
               &nbsp;·&nbsp; CAGR&nbsp;<strong class="pos">25.1%</strong>
@@ -1859,15 +1822,11 @@
       </summary>
       <div class="guide-body">
         
-        
-        <div class="guide-section-label">Eligible universe</div>
-        <div class="guide-universe">
-          <span class="guide-universe-label">Selects from all 32 instruments — holds top 5 at any given time</span>
-          <div class="guide-universe-chips"><span class="chip chip--sm" title="Nasdaq-100 ETF">QQQ</span> <span class="chip chip--sm" title="S&P 500 ETF (Vanguard)">VOO</span> <span class="chip chip--sm" title="S&P 500 ETF (SPDR)">SPY</span> <span class="chip chip--sm" title="Total US Market ETF">VTI</span> <span class="chip chip--sm" title="International ex-US ETF">VXUS</span> <span class="chip chip--sm" title="EEM">EEM</span> <span class="chip chip--sm" title="IWM">IWM</span> <span class="chip chip--sm" title="S&P 500 Momentum ETF">SPMO</span> <span class="chip chip--sm" title="Large-Cap Growth ETF">SCHG</span> <span class="chip chip--sm" title="Small-Cap Value ETF">VBR</span> <span class="chip chip--sm" title="Technology Sector ETF">VGT</span> <span class="chip chip--sm" title="Semiconductor ETF">SOXX</span> <span class="chip chip--sm" title="XLE">XLE</span> <span class="chip chip--sm" title="XLV">XLV</span> <span class="chip chip--sm" title="XLF">XLF</span> <span class="chip chip--sm" title="3× Nasdaq-100 (leveraged)">TQQQ</span> <span class="chip chip--sm" title="3× S&P 500 (leveraged)">UPRO</span> <span class="chip chip--sm" title="3× 20-yr Treasury (leveraged)">TMF</span> <span class="chip chip--sm" title="Gold ETF">GLD</span> <span class="chip chip--sm" title="US REIT ETF">VNQ</span> <span class="chip chip--sm" title="DBC">DBC</span> <span class="chip chip--sm" title="Bitcoin">BTC-USD</span> <span class="chip chip--sm" title="Total Bond Market ETF">BND</span> <span class="chip chip--sm" title="HYG">HYG</span> <span class="chip chip--sm" title="TIP">TIP</span> <span class="chip chip--sm" title="20-yr Treasury ETF">TLT</span> <span class="chip chip--sm" title="Short-Term Treasury ETF">SHY</span> <span class="chip chip--sm" title="Apple">AAPL</span> <span class="chip chip--sm" title="Microsoft">MSFT</span> <span class="chip chip--sm" title="Nvidia">NVDA</span> <span class="chip chip--sm" title="Amazon">AMZN</span> <span class="chip chip--sm" title="Alphabet">GOOGL</span></div>
-        </div>
+        <div class="guide-section-label">What it does</div>
+        <p class="guide-description">Same as top3 variant but holds the top 5 instruments (20% each). More diversified, slightly lower concentration risk.</p>
         <div class="guide-section-label">Step-by-step</div>
         <ol class="guide-steps">
-          <li>On the 1st business day of each month, look up the 12-month total return for every fund in the universe (32 funds).</li><li>Rank them. Buy the top 5 by equal weight (20% each). Sell anything not in the top 5.</li><li>If a fund has fewer than 12 months of data, skip it. Fill missing slots with <strong>SHY</strong> <span class="ticker-desc">(Short-Term Treasury ETF)</span> as a cash proxy.</li>
+          <li>Calculate 12-month return for all 32 funds. 2. Identify the top 5. 3. Hold them at 20% each. 4. Sell the rest. Repeat monthly.</li>
         </ol>
         
         <div class="guide-section-label">Trade history (125 rebalances over backtest period)</div>
@@ -2505,8 +2464,7 @@
           </table>
         </div>
         <div class="guide-meta-row">
-          <span class="guide-meta-item"><span class="guide-meta-label">Rebalance frequency</span> monthly</span>
-          <span class="guide-meta-item"><span class="guide-meta-label">Implementation effort</span> Medium — requires pulling 12-month return data every month</span>
+          <span class="guide-meta-item"><span class="guide-meta-label">Rebalance</span> monthly</span>
         </div>
       </div>
     </details>
@@ -2515,7 +2473,10 @@
         <div class="guide-summary-left">
           <span class="guide-rank-badge rank-other">#4</span>
           <div>
-            <div class="guide-strategy-name">MaxSharpe(36m lookback) | Calendar(quarterly)</div>
+            <div class="guide-strategy-name">
+              MaxSharpe(36m lookback) | Calendar(quarterly)
+              <a class="guide-md-link" href="https://github.com/neoskx/ira-strategies/blob/main/data/strategies/13-max-sharpe/strategy.md" target="_blank" title="View strategy spec">spec&nbsp;↗</a>
+            </div>
             <div class="guide-summary-metrics">
               Sharpe&nbsp;<strong>0.73</strong>
               &nbsp;·&nbsp; CAGR&nbsp;<strong class="pos">28.7%</strong>
@@ -2528,15 +2489,11 @@
       </summary>
       <div class="guide-body">
         
-        
-        <div class="guide-section-label">Eligible universe</div>
-        <div class="guide-universe">
-          <span class="guide-universe-label">Optimizes across all 32 instruments — actual holdings vary by quarter</span>
-          <div class="guide-universe-chips"><span class="chip chip--sm" title="Nasdaq-100 ETF">QQQ</span> <span class="chip chip--sm" title="S&P 500 ETF (Vanguard)">VOO</span> <span class="chip chip--sm" title="S&P 500 ETF (SPDR)">SPY</span> <span class="chip chip--sm" title="Total US Market ETF">VTI</span> <span class="chip chip--sm" title="International ex-US ETF">VXUS</span> <span class="chip chip--sm" title="EEM">EEM</span> <span class="chip chip--sm" title="IWM">IWM</span> <span class="chip chip--sm" title="S&P 500 Momentum ETF">SPMO</span> <span class="chip chip--sm" title="Large-Cap Growth ETF">SCHG</span> <span class="chip chip--sm" title="Small-Cap Value ETF">VBR</span> <span class="chip chip--sm" title="Technology Sector ETF">VGT</span> <span class="chip chip--sm" title="Semiconductor ETF">SOXX</span> <span class="chip chip--sm" title="XLE">XLE</span> <span class="chip chip--sm" title="XLV">XLV</span> <span class="chip chip--sm" title="XLF">XLF</span> <span class="chip chip--sm" title="3× Nasdaq-100 (leveraged)">TQQQ</span> <span class="chip chip--sm" title="3× S&P 500 (leveraged)">UPRO</span> <span class="chip chip--sm" title="3× 20-yr Treasury (leveraged)">TMF</span> <span class="chip chip--sm" title="Gold ETF">GLD</span> <span class="chip chip--sm" title="US REIT ETF">VNQ</span> <span class="chip chip--sm" title="DBC">DBC</span> <span class="chip chip--sm" title="Bitcoin">BTC-USD</span> <span class="chip chip--sm" title="Total Bond Market ETF">BND</span> <span class="chip chip--sm" title="HYG">HYG</span> <span class="chip chip--sm" title="TIP">TIP</span> <span class="chip chip--sm" title="20-yr Treasury ETF">TLT</span> <span class="chip chip--sm" title="Short-Term Treasury ETF">SHY</span> <span class="chip chip--sm" title="Apple">AAPL</span> <span class="chip chip--sm" title="Microsoft">MSFT</span> <span class="chip chip--sm" title="Nvidia">NVDA</span> <span class="chip chip--sm" title="Amazon">AMZN</span> <span class="chip chip--sm" title="Alphabet">GOOGL</span></div>
-        </div>
+        <div class="guide-section-label">What it does</div>
+        <p class="guide-description">Mean-variance optimization: find the portfolio weights that maximize the Sharpe ratio using 36 months of historical returns. Requires a solver. Output changes each quarter based on the rolling data.</p>
         <div class="guide-section-label">Step-by-step</div>
         <ol class="guide-steps">
-          <li>At the start of each quarter, download the past 36 months of price data for all 32 funds.</li><li>Run a mean-variance optimization (e.g., in Python or a spreadsheet) to find the portfolio weights that maximize the Sharpe ratio.</li><li>Rebalance your account to those computed weights. The output changes each quarter based on the rolling 3-year history.</li>
+          <li>Download 36 months of returns for all funds. 2. Run mean-variance optimization to maximize Sharpe. 3. Rebalance to the computed weights. Repeat quarterly.</li>
         </ol>
         
         <div class="guide-section-label">Trade history (42 rebalances over backtest period)</div>
@@ -2759,8 +2716,7 @@
           </table>
         </div>
         <div class="guide-meta-row">
-          <span class="guide-meta-item"><span class="guide-meta-label">Rebalance frequency</span> quarterly</span>
-          <span class="guide-meta-item"><span class="guide-meta-label">Implementation effort</span> High — requires an optimization tool or spreadsheet with solver</span>
+          <span class="guide-meta-item"><span class="guide-meta-label">Rebalance</span> quarterly</span>
         </div>
       </div>
     </details>
@@ -2769,7 +2725,10 @@
         <div class="guide-summary-left">
           <span class="guide-rank-badge rank-other">#5</span>
           <div>
-            <div class="guide-strategy-name">MomentumRotation(top3, 12m) | Calendar(monthly)</div>
+            <div class="guide-strategy-name">
+              MomentumRotation(top3, 12m) | Calendar(monthly)
+              <a class="guide-md-link" href="https://github.com/neoskx/ira-strategies/blob/main/data/strategies/09-momentum-rotation-top3/strategy.md" target="_blank" title="View strategy spec">spec&nbsp;↗</a>
+            </div>
             <div class="guide-summary-metrics">
               Sharpe&nbsp;<strong>0.69</strong>
               &nbsp;·&nbsp; CAGR&nbsp;<strong class="pos">23.9%</strong>
@@ -2782,15 +2741,11 @@
       </summary>
       <div class="guide-body">
         
-        
-        <div class="guide-section-label">Eligible universe</div>
-        <div class="guide-universe">
-          <span class="guide-universe-label">Selects from all 32 instruments — holds top 3 at any given time</span>
-          <div class="guide-universe-chips"><span class="chip chip--sm" title="Nasdaq-100 ETF">QQQ</span> <span class="chip chip--sm" title="S&P 500 ETF (Vanguard)">VOO</span> <span class="chip chip--sm" title="S&P 500 ETF (SPDR)">SPY</span> <span class="chip chip--sm" title="Total US Market ETF">VTI</span> <span class="chip chip--sm" title="International ex-US ETF">VXUS</span> <span class="chip chip--sm" title="EEM">EEM</span> <span class="chip chip--sm" title="IWM">IWM</span> <span class="chip chip--sm" title="S&P 500 Momentum ETF">SPMO</span> <span class="chip chip--sm" title="Large-Cap Growth ETF">SCHG</span> <span class="chip chip--sm" title="Small-Cap Value ETF">VBR</span> <span class="chip chip--sm" title="Technology Sector ETF">VGT</span> <span class="chip chip--sm" title="Semiconductor ETF">SOXX</span> <span class="chip chip--sm" title="XLE">XLE</span> <span class="chip chip--sm" title="XLV">XLV</span> <span class="chip chip--sm" title="XLF">XLF</span> <span class="chip chip--sm" title="3× Nasdaq-100 (leveraged)">TQQQ</span> <span class="chip chip--sm" title="3× S&P 500 (leveraged)">UPRO</span> <span class="chip chip--sm" title="3× 20-yr Treasury (leveraged)">TMF</span> <span class="chip chip--sm" title="Gold ETF">GLD</span> <span class="chip chip--sm" title="US REIT ETF">VNQ</span> <span class="chip chip--sm" title="DBC">DBC</span> <span class="chip chip--sm" title="Bitcoin">BTC-USD</span> <span class="chip chip--sm" title="Total Bond Market ETF">BND</span> <span class="chip chip--sm" title="HYG">HYG</span> <span class="chip chip--sm" title="TIP">TIP</span> <span class="chip chip--sm" title="20-yr Treasury ETF">TLT</span> <span class="chip chip--sm" title="Short-Term Treasury ETF">SHY</span> <span class="chip chip--sm" title="Apple">AAPL</span> <span class="chip chip--sm" title="Microsoft">MSFT</span> <span class="chip chip--sm" title="Nvidia">NVDA</span> <span class="chip chip--sm" title="Amazon">AMZN</span> <span class="chip chip--sm" title="Alphabet">GOOGL</span></div>
-        </div>
+        <div class="guide-section-label">What it does</div>
+        <p class="guide-description">Each month, rank all 32 instruments by 12-month total return. Hold the top 3 in equal weight (33.3% each). Rotates monthly. Performs well in trending markets, can lag in choppy sideways periods.</p>
         <div class="guide-section-label">Step-by-step</div>
         <ol class="guide-steps">
-          <li>On the 1st business day of each month, look up the 12-month total return for every fund in the universe (32 funds).</li><li>Rank them. Buy the top 3 by equal weight (33% each). Sell anything not in the top 3.</li><li>If a fund has fewer than 12 months of data, skip it. Fill missing slots with <strong>SHY</strong> <span class="ticker-desc">(Short-Term Treasury ETF)</span> as a cash proxy.</li>
+          <li>Calculate 12-month return for all 32 funds. 2. Identify the top 3. 3. Hold them equally. 4. Sell anything outside the top 3. Repeat monthly.</li>
         </ol>
         
         <div class="guide-section-label">Trade history (125 rebalances over backtest period)</div>
@@ -3428,8 +3383,7 @@
           </table>
         </div>
         <div class="guide-meta-row">
-          <span class="guide-meta-item"><span class="guide-meta-label">Rebalance frequency</span> monthly</span>
-          <span class="guide-meta-item"><span class="guide-meta-label">Implementation effort</span> Medium — requires pulling 12-month return data every month</span>
+          <span class="guide-meta-item"><span class="guide-meta-label">Rebalance</span> monthly</span>
         </div>
       </div>
     </details>
@@ -3438,7 +3392,10 @@
         <div class="guide-summary-left">
           <span class="guide-rank-badge rank-other">#6</span>
           <div>
-            <div class="guide-strategy-name">QqqVooSpyAdaptive(12m mom, 3m vol) | Calendar(monthly)</div>
+            <div class="guide-strategy-name">
+              QqqVooSpyAdaptive(12m mom, 3m vol) | Calendar(monthly)
+              <a class="guide-md-link" href="https://github.com/neoskx/ira-strategies/blob/main/data/strategies/18-qqq-voo-spy-adaptive/strategy.md" target="_blank" title="View strategy spec">spec&nbsp;↗</a>
+            </div>
             <div class="guide-summary-metrics">
               Sharpe&nbsp;<strong>0.58</strong>
               &nbsp;·&nbsp; CAGR&nbsp;<strong class="pos">13.3%</strong>
@@ -3451,15 +3408,11 @@
       </summary>
       <div class="guide-body">
         
-        
-        <div class="guide-section-label">Eligible universe</div>
-        <div class="guide-universe">
-          <span class="guide-universe-label">Fixed 3-fund shortlist — only these ETFs are ever considered</span>
-          <div class="guide-universe-chips"><span class="chip chip--sm" title="Nasdaq-100 ETF">QQQ</span> <span class="chip chip--sm" title="S&P 500 ETF (Vanguard)">VOO</span> <span class="chip chip--sm" title="S&P 500 ETF (SPDR)">SPY</span></div>
-        </div>
+        <div class="guide-section-label">What it does</div>
+        <p class="guide-description">Constrained momentum: only consider QQQ, VOO, and SPY. Score each by risk-adjusted momentum. If QQQ wins, hold 100% QQQ. If VOO or SPY wins, hold 50% VOO + 50% SPY (split to reduce fund-specific risk).</p>
         <div class="guide-section-label">Step-by-step</div>
         <ol class="guide-steps">
-          <li>On the 1st business day of each month, compute a score for each of the three funds: score = (12-month return) ÷ (3-month volatility).</li><li>Identify the highest-scoring fund. If it is <strong>QQQ</strong> <span class="ticker-desc">(Nasdaq-100 ETF)</span>: hold 100% QQQ.</li><li>If <strong>VOO</strong> <span class="ticker-desc">(S&P 500 ETF (Vanguard))</span> or <strong>SPY</strong> <span class="ticker-desc">(S&P 500 ETF (SPDR))</span> has the highest score: hold 50% VOO + 50% SPY (split S&P 500 exposure between both to reduce fund-specific risk).</li>
+          <li>Score QQQ, VOO, SPY by 12m return / 3m vol. 2. If QQQ wins → 100% QQQ. 3. If VOO or SPY wins → 50% VOO + 50% SPY. Rebalance monthly.</li>
         </ol>
         
         <div class="guide-section-label">Trade history (124 rebalances over backtest period)</div>
@@ -4092,8 +4045,7 @@
           </table>
         </div>
         <div class="guide-meta-row">
-          <span class="guide-meta-item"><span class="guide-meta-label">Rebalance frequency</span> monthly</span>
-          <span class="guide-meta-item"><span class="guide-meta-label">Implementation effort</span> Low — only 3 funds to score, one monthly decision</span>
+          <span class="guide-meta-item"><span class="guide-meta-label">Rebalance</span> monthly</span>
         </div>
       </div>
     </details>
@@ -4102,7 +4054,10 @@
         <div class="guide-summary-left">
           <span class="guide-rank-badge rank-other">#7</span>
           <div>
-            <div class="guide-strategy-name">EqualWeight(32 assets) | Calendar(monthly)</div>
+            <div class="guide-strategy-name">
+              EqualWeight(32 assets) | Calendar(monthly)
+              <a class="guide-md-link" href="https://github.com/neoskx/ira-strategies/blob/main/data/strategies/08-equal-weight/strategy.md" target="_blank" title="View strategy spec">spec&nbsp;↗</a>
+            </div>
             <div class="guide-summary-metrics">
               Sharpe&nbsp;<strong>0.54</strong>
               &nbsp;·&nbsp; CAGR&nbsp;<strong class="pos">12.3%</strong>
@@ -4115,15 +4070,11 @@
       </summary>
       <div class="guide-body">
         
-        
-        <div class="guide-section-label">Eligible universe</div>
-        <div class="guide-universe">
-          <span class="guide-universe-label">All 32 instruments — every one held simultaneously</span>
-          <div class="guide-universe-chips"><span class="chip chip--sm" title="Nasdaq-100 ETF">QQQ</span> <span class="chip chip--sm" title="S&P 500 ETF (Vanguard)">VOO</span> <span class="chip chip--sm" title="S&P 500 ETF (SPDR)">SPY</span> <span class="chip chip--sm" title="Total US Market ETF">VTI</span> <span class="chip chip--sm" title="International ex-US ETF">VXUS</span> <span class="chip chip--sm" title="EEM">EEM</span> <span class="chip chip--sm" title="IWM">IWM</span> <span class="chip chip--sm" title="S&P 500 Momentum ETF">SPMO</span> <span class="chip chip--sm" title="Large-Cap Growth ETF">SCHG</span> <span class="chip chip--sm" title="Small-Cap Value ETF">VBR</span> <span class="chip chip--sm" title="Technology Sector ETF">VGT</span> <span class="chip chip--sm" title="Semiconductor ETF">SOXX</span> <span class="chip chip--sm" title="XLE">XLE</span> <span class="chip chip--sm" title="XLV">XLV</span> <span class="chip chip--sm" title="XLF">XLF</span> <span class="chip chip--sm" title="3× Nasdaq-100 (leveraged)">TQQQ</span> <span class="chip chip--sm" title="3× S&P 500 (leveraged)">UPRO</span> <span class="chip chip--sm" title="3× 20-yr Treasury (leveraged)">TMF</span> <span class="chip chip--sm" title="Gold ETF">GLD</span> <span class="chip chip--sm" title="US REIT ETF">VNQ</span> <span class="chip chip--sm" title="DBC">DBC</span> <span class="chip chip--sm" title="Bitcoin">BTC-USD</span> <span class="chip chip--sm" title="Total Bond Market ETF">BND</span> <span class="chip chip--sm" title="HYG">HYG</span> <span class="chip chip--sm" title="TIP">TIP</span> <span class="chip chip--sm" title="20-yr Treasury ETF">TLT</span> <span class="chip chip--sm" title="Short-Term Treasury ETF">SHY</span> <span class="chip chip--sm" title="Apple">AAPL</span> <span class="chip chip--sm" title="Microsoft">MSFT</span> <span class="chip chip--sm" title="Nvidia">NVDA</span> <span class="chip chip--sm" title="Amazon">AMZN</span> <span class="chip chip--sm" title="Alphabet">GOOGL</span></div>
-        </div>
+        <div class="guide-section-label">What it does</div>
+        <p class="guide-description">Divide the portfolio equally across all 32 instruments in the universe (~3.1% each). No market view required. Relies on diversification to smooth returns and benefit from rebalancing gains.</p>
         <div class="guide-section-label">Step-by-step</div>
         <ol class="guide-steps">
-          <li>Divide your account equally: 3.1% in each of the 32 funds in the universe.</li><li>Rebalance on the 1st business day of each month: bring every fund back to 3.1%. Sell what is over, buy what is under.</li><li>No signals or calculations required — simple equal weighting every period.</li>
+          <li>Every month, restore each fund to equal weight by selling overweight positions and buying underweight ones.</li>
         </ol>
         
         <div class="guide-section-label">Trade history (126 rebalances over backtest period)</div>
@@ -4766,8 +4717,7 @@
           </table>
         </div>
         <div class="guide-meta-row">
-          <span class="guide-meta-item"><span class="guide-meta-label">Rebalance frequency</span> monthly</span>
-          <span class="guide-meta-item"><span class="guide-meta-label">Implementation effort</span> Low — no calculations, just restore equal weights each period</span>
+          <span class="guide-meta-item"><span class="guide-meta-label">Rebalance</span> monthly</span>
         </div>
       </div>
     </details>
@@ -4776,7 +4726,10 @@
         <div class="guide-summary-left">
           <span class="guide-rank-badge rank-other">#8</span>
           <div>
-            <div class="guide-strategy-name">MinVariance(36m lookback) | Calendar(quarterly)</div>
+            <div class="guide-strategy-name">
+              MinVariance(36m lookback) | Calendar(quarterly)
+              <a class="guide-md-link" href="https://github.com/neoskx/ira-strategies/blob/main/data/strategies/14-min-variance/strategy.md" target="_blank" title="View strategy spec">spec&nbsp;↗</a>
+            </div>
             <div class="guide-summary-metrics">
               Sharpe&nbsp;<strong>0.51</strong>
               &nbsp;·&nbsp; CAGR&nbsp;<strong class="pos">17.7%</strong>
@@ -4789,15 +4742,11 @@
       </summary>
       <div class="guide-body">
         
-        
-        <div class="guide-section-label">Eligible universe</div>
-        <div class="guide-universe">
-          <span class="guide-universe-label">Optimizes across all 32 instruments — typically concentrates in low-volatility assets</span>
-          <div class="guide-universe-chips"><span class="chip chip--sm" title="Nasdaq-100 ETF">QQQ</span> <span class="chip chip--sm" title="S&P 500 ETF (Vanguard)">VOO</span> <span class="chip chip--sm" title="S&P 500 ETF (SPDR)">SPY</span> <span class="chip chip--sm" title="Total US Market ETF">VTI</span> <span class="chip chip--sm" title="International ex-US ETF">VXUS</span> <span class="chip chip--sm" title="EEM">EEM</span> <span class="chip chip--sm" title="IWM">IWM</span> <span class="chip chip--sm" title="S&P 500 Momentum ETF">SPMO</span> <span class="chip chip--sm" title="Large-Cap Growth ETF">SCHG</span> <span class="chip chip--sm" title="Small-Cap Value ETF">VBR</span> <span class="chip chip--sm" title="Technology Sector ETF">VGT</span> <span class="chip chip--sm" title="Semiconductor ETF">SOXX</span> <span class="chip chip--sm" title="XLE">XLE</span> <span class="chip chip--sm" title="XLV">XLV</span> <span class="chip chip--sm" title="XLF">XLF</span> <span class="chip chip--sm" title="3× Nasdaq-100 (leveraged)">TQQQ</span> <span class="chip chip--sm" title="3× S&P 500 (leveraged)">UPRO</span> <span class="chip chip--sm" title="3× 20-yr Treasury (leveraged)">TMF</span> <span class="chip chip--sm" title="Gold ETF">GLD</span> <span class="chip chip--sm" title="US REIT ETF">VNQ</span> <span class="chip chip--sm" title="DBC">DBC</span> <span class="chip chip--sm" title="Bitcoin">BTC-USD</span> <span class="chip chip--sm" title="Total Bond Market ETF">BND</span> <span class="chip chip--sm" title="HYG">HYG</span> <span class="chip chip--sm" title="TIP">TIP</span> <span class="chip chip--sm" title="20-yr Treasury ETF">TLT</span> <span class="chip chip--sm" title="Short-Term Treasury ETF">SHY</span> <span class="chip chip--sm" title="Apple">AAPL</span> <span class="chip chip--sm" title="Microsoft">MSFT</span> <span class="chip chip--sm" title="Nvidia">NVDA</span> <span class="chip chip--sm" title="Amazon">AMZN</span> <span class="chip chip--sm" title="Alphabet">GOOGL</span></div>
-        </div>
+        <div class="guide-section-label">What it does</div>
+        <p class="guide-description">Minimum variance optimization: find the portfolio weights that minimize total volatility regardless of return. Results in heavy allocation to bonds and gold. Capital preservation focus.</p>
         <div class="guide-section-label">Step-by-step</div>
         <ol class="guide-steps">
-          <li>At the start of each quarter, download the past 36 months of price data for all 32 funds.</li><li>Run a minimum-variance optimization to find the weight mix that minimizes total portfolio volatility (regardless of return).</li><li>Rebalance to those weights. Expect heavy allocation to low-volatility assets like bonds and gold.</li>
+          <li>Download 36 months of returns. 2. Run min-variance optimization. 3. Rebalance to computed weights. Repeat quarterly.</li>
         </ol>
         
         <div class="guide-section-label">Trade history (42 rebalances over backtest period)</div>
@@ -5020,8 +4969,7 @@
           </table>
         </div>
         <div class="guide-meta-row">
-          <span class="guide-meta-item"><span class="guide-meta-label">Rebalance frequency</span> quarterly</span>
-          <span class="guide-meta-item"><span class="guide-meta-label">Implementation effort</span> High — requires an optimization tool or spreadsheet with solver</span>
+          <span class="guide-meta-item"><span class="guide-meta-label">Rebalance</span> quarterly</span>
         </div>
       </div>
     </details>
@@ -5030,7 +4978,10 @@
         <div class="guide-summary-left">
           <span class="guide-rank-badge rank-other">#9</span>
           <div>
-            <div class="guide-strategy-name">DualMomentum(12m) | Calendar(monthly)</div>
+            <div class="guide-strategy-name">
+              DualMomentum(12m) | Calendar(monthly)
+              <a class="guide-md-link" href="https://github.com/neoskx/ira-strategies/blob/main/data/strategies/11-dual-momentum/strategy.md" target="_blank" title="View strategy spec">spec&nbsp;↗</a>
+            </div>
             <div class="guide-summary-metrics">
               Sharpe&nbsp;<strong>0.42</strong>
               &nbsp;·&nbsp; CAGR&nbsp;<strong class="pos">10.7%</strong>
@@ -5043,15 +4994,11 @@
       </summary>
       <div class="guide-body">
         
-        
-        <div class="guide-section-label">Eligible universe</div>
-        <div class="guide-universe">
-          <span class="guide-universe-label">Chooses between 2 equity ETFs; falls back to bonds</span>
-          <div class="guide-universe-chips"><span class="chip chip--sm" title="Nasdaq-100 ETF">QQQ</span> <span class="chip chip--sm" title="International ex-US ETF">VXUS</span> <span class="chip chip--sm" title="Total Bond Market ETF">BND</span> <span class="chip chip--sm" title="Short-Term Treasury ETF">SHY</span></div>
-        </div>
+        <div class="guide-section-label">What it does</div>
+        <p class="guide-description">Gary Antonacci's Dual Momentum: compare QQQ vs VXUS over 12 months (relative momentum), then compare the winner vs SHY (absolute momentum). If the equity winner beats cash, hold it. Otherwise hold BND. Defensive and historically effective.</p>
         <div class="guide-section-label">Step-by-step</div>
         <ol class="guide-steps">
-          <li>On the 1st business day of each month, compare the 12-month total return of <strong>QQQ</strong> <span class="ticker-desc">(Nasdaq-100 ETF)</span> vs <strong>VXUS</strong> <span class="ticker-desc">(International ex-US ETF)</span>.</li><li>The winner is whichever beat the other. Now compare that winner's 12-month return vs <strong>SHY</strong> <span class="ticker-desc">(Short-Term Treasury ETF)</span> (cash proxy).</li><li>If the equity winner beats SHY → put 100% into that ETF. If it doesn't → put 100% into <strong>BND</strong> <span class="ticker-desc">(Total Bond Market ETF)</span> (bonds). Repeat each month.</li>
+          <li>Compare 12m return of QQQ vs VXUS. 2. Take the winner. 3. If the winner beats SHY → hold it 100%. If not → hold BND 100%. Repeat monthly.</li>
         </ol>
         
         <div class="guide-section-label">Trade history (126 rebalances over backtest period)</div>
@@ -5694,8 +5641,7 @@
           </table>
         </div>
         <div class="guide-meta-row">
-          <span class="guide-meta-item"><span class="guide-meta-label">Rebalance frequency</span> monthly</span>
-          <span class="guide-meta-item"><span class="guide-meta-label">Implementation effort</span> Medium — two 12-month return comparisons per month, one fund to hold</span>
+          <span class="guide-meta-item"><span class="guide-meta-label">Rebalance</span> monthly</span>
         </div>
       </div>
     </details>
@@ -5704,7 +5650,10 @@
         <div class="guide-summary-left">
           <span class="guide-rank-badge rank-other">#10</span>
           <div>
-            <div class="guide-strategy-name">TrendFollowing(200d MA) | Calendar(monthly)</div>
+            <div class="guide-strategy-name">
+              TrendFollowing(200d MA) | Calendar(monthly)
+              <a class="guide-md-link" href="https://github.com/neoskx/ira-strategies/blob/main/data/strategies/12-trend-following/strategy.md" target="_blank" title="View strategy spec">spec&nbsp;↗</a>
+            </div>
             <div class="guide-summary-metrics">
               Sharpe&nbsp;<strong>0.42</strong>
               &nbsp;·&nbsp; CAGR&nbsp;<strong class="pos">10.1%</strong>
@@ -5717,15 +5666,11 @@
       </summary>
       <div class="guide-body">
         
-        
-        <div class="guide-section-label">Eligible universe</div>
-        <div class="guide-universe">
-          <span class="guide-universe-label">Monitors 10 risky ETFs; shifts to BND below trend</span>
-          <div class="guide-universe-chips"><span class="chip chip--sm" title="Nasdaq-100 ETF">QQQ</span> <span class="chip chip--sm" title="S&P 500 ETF (Vanguard)">VOO</span> <span class="chip chip--sm" title="S&P 500 ETF (SPDR)">SPY</span> <span class="chip chip--sm" title="Total US Market ETF">VTI</span> <span class="chip chip--sm" title="International ex-US ETF">VXUS</span> <span class="chip chip--sm" title="S&P 500 Momentum ETF">SPMO</span> <span class="chip chip--sm" title="Large-Cap Growth ETF">SCHG</span> <span class="chip chip--sm" title="Small-Cap Value ETF">VBR</span> <span class="chip chip--sm" title="Technology Sector ETF">VGT</span> <span class="chip chip--sm" title="Semiconductor ETF">SOXX</span> <span class="chip chip--sm" title="Total Bond Market ETF">BND</span></div>
-        </div>
+        <div class="guide-section-label">What it does</div>
+        <p class="guide-description">For each of the 15 risky ETFs, check if it is above its 200-day moving average. Hold the ones that are above (equal weight among them), replace the ones below with BND. Defensive approach that avoids holding ETFs in downtrends.</p>
         <div class="guide-section-label">Step-by-step</div>
         <ol class="guide-steps">
-          <li>On the 1st business day of each month, look up the 200-day moving average for each risky ETF in the universe.</li><li>Hold each ETF that is currently <em>above</em> its 200-day MA in equal weight. For any ETF trading <em>below</em> its 200-day MA, hold <strong>BND</strong> <span class="ticker-desc">(Total Bond Market ETF)</span> in its place.</li><li>When an ETF crosses back above its 200-day MA next month, switch it back from BND to the ETF.</li>
+          <li>Check each risky ETF vs its 200-day MA. 2. Hold those above in equal weight. 3. Hold BND for those below. Rebalance monthly.</li>
         </ol>
         
         <div class="guide-section-label">Trade history (126 rebalances over backtest period)</div>
@@ -6368,8 +6313,7 @@
           </table>
         </div>
         <div class="guide-meta-row">
-          <span class="guide-meta-item"><span class="guide-meta-label">Rebalance frequency</span> monthly</span>
-          <span class="guide-meta-item"><span class="guide-meta-label">Implementation effort</span> Medium — need 200-day MA for each fund monthly</span>
+          <span class="guide-meta-item"><span class="guide-meta-label">Rebalance</span> monthly</span>
         </div>
       </div>
     </details>
@@ -6378,7 +6322,10 @@
         <div class="guide-summary-left">
           <span class="guide-rank-badge rank-other">#11</span>
           <div>
-            <div class="guide-strategy-name">QqqMonthlyDCA | Calendar(daily)</div>
+            <div class="guide-strategy-name">
+              QqqMonthlyDCA | Calendar(daily)
+              <a class="guide-md-link" href="https://github.com/neoskx/ira-strategies/blob/main/data/strategies/qqq-monthly-dca/strategy.md" target="_blank" title="View strategy spec">spec&nbsp;↗</a>
+            </div>
             <div class="guide-summary-metrics">
               Sharpe&nbsp;<strong>0.40</strong>
               &nbsp;·&nbsp; CAGR&nbsp;<strong class="pos">8.3%</strong>
@@ -6391,10 +6338,13 @@
       </summary>
       <div class="guide-body">
         
-        
+        <div class="guide-section-label">What it does</div>
+        <p class="guide-description">Invest only in QQQ, but instead of holding it as a lump sum, sell to cash at the start of each month and buy back in equal daily installments over the month's trading days. By the last trading day of the month, fully invested in QQQ again.
+
+Tests whether spreading the monthly re-entry reduces timing risk compared to continuous lump-sum QQQ buy-and-hold.</p>
         <div class="guide-section-label">Step-by-step</div>
         <ol class="guide-steps">
-          <li>Refer to strategy documentation for implementation details.</li>
+          <li>On day 1 of each month: hold 1/N QQQ, (N-1)/N SHY — where N = total trading days in this month.</li><li>On day 2: hold 2/N QQQ, (N-2)/N SHY.</li><li>Each subsequent day: increase QQQ weight by 1/N.</li><li>On day N (last trading day of month): hold 100% QQQ.</li><li>Repeat from step 1 next month.</li>
         </ol>
         
         <div class="guide-section-label">Trade history (2721 rebalances over backtest period)</div>
@@ -20012,8 +19962,7 @@
           </table>
         </div>
         <div class="guide-meta-row">
-          <span class="guide-meta-item"><span class="guide-meta-label">Rebalance frequency</span> daily</span>
-          <span class="guide-meta-item"><span class="guide-meta-label">Implementation effort</span> Unknown</span>
+          <span class="guide-meta-item"><span class="guide-meta-label">Rebalance</span> daily</span>
         </div>
       </div>
     </details>
@@ -20022,7 +19971,10 @@
         <div class="guide-summary-left">
           <span class="guide-rank-badge rank-other">#12</span>
           <div>
-            <div class="guide-strategy-name">FixedWeight(VTI:60%, BND:40%) | Calendar(annual)</div>
+            <div class="guide-strategy-name">
+              FixedWeight(VTI:60%, BND:40%) | Calendar(annual)
+              <a class="guide-md-link" href="https://github.com/neoskx/ira-strategies/blob/main/data/strategies/06-fixed-weight-vti-bnd/strategy.md" target="_blank" title="View strategy spec">spec&nbsp;↗</a>
+            </div>
             <div class="guide-summary-metrics">
               Sharpe&nbsp;<strong>0.26</strong>
               &nbsp;·&nbsp; CAGR&nbsp;<strong class="pos">6.6%</strong>
@@ -20035,29 +19987,11 @@
       </summary>
       <div class="guide-body">
         
-        <div class="guide-section-label">Fixed holdings</div>
-        <div class="guide-alloc-row">
-          
-          <div class="guide-alloc-item">
-            <div class="guide-alloc-pct">60%</div>
-            <div class="guide-alloc-ticker">VTI</div>
-            <div class="guide-alloc-name">Total US Market ETF</div>
-          </div>
-          <div class="guide-alloc-item">
-            <div class="guide-alloc-pct">40%</div>
-            <div class="guide-alloc-ticker">BND</div>
-            <div class="guide-alloc-name">Total Bond Market ETF</div>
-          </div>
-        </div>
-        
-        <div class="guide-section-label">Eligible universe</div>
-        <div class="guide-universe">
-          <span class="guide-universe-label">Fixed — only these 2 funds</span>
-          <div class="guide-universe-chips"><span class="chip chip--sm" title="Total US Market ETF">VTI</span> <span class="chip chip--sm" title="Total Bond Market ETF">BND</span></div>
-        </div>
+        <div class="guide-section-label">What it does</div>
+        <p class="guide-description">Classic 60/40 portfolio: 60% Total US Market, 40% Total Bond Market. The traditional balanced portfolio for long-term investors seeking growth with reduced volatility.</p>
         <div class="guide-section-label">Step-by-step</div>
         <ol class="guide-steps">
-          <li>Set your 401k fund allocations to: 60% in <strong>VTI</strong> <span class="ticker-desc">(Total US Market ETF)</span>, 40% in <strong>BND</strong> <span class="ticker-desc">(Total Bond Market ETF)</span>.</li><li>Check your balance once a year (e.g., every January 1st). If any fund has drifted more than 5 percentage points from its target, rebalance it back.</li><li>Hold through all market conditions — no other action needed.</li>
+          <li>Set allocations and rebalance annually. Simple and time-tested.</li>
         </ol>
         
         <div class="guide-section-label">Trade history (11 rebalances over backtest period)</div>
@@ -20125,8 +20059,7 @@
           </table>
         </div>
         <div class="guide-meta-row">
-          <span class="guide-meta-item"><span class="guide-meta-label">Rebalance frequency</span> annual</span>
-          <span class="guide-meta-item"><span class="guide-meta-label">Implementation effort</span> Low — one action per rebalance period, no ongoing monitoring</span>
+          <span class="guide-meta-item"><span class="guide-meta-label">Rebalance</span> annual</span>
         </div>
       </div>
     </details>
@@ -20135,7 +20068,10 @@
         <div class="guide-summary-left">
           <span class="guide-rank-badge rank-other">#13</span>
           <div>
-            <div class="guide-strategy-name">RiskParity(3m vol) | Calendar(monthly)</div>
+            <div class="guide-strategy-name">
+              RiskParity(3m vol) | Calendar(monthly)
+              <a class="guide-md-link" href="https://github.com/neoskx/ira-strategies/blob/main/data/strategies/15-risk-parity/strategy.md" target="_blank" title="View strategy spec">spec&nbsp;↗</a>
+            </div>
             <div class="guide-summary-metrics">
               Sharpe&nbsp;<strong>0.07</strong>
               &nbsp;·&nbsp; CAGR&nbsp;<strong class="pos">4.8%</strong>
@@ -20148,15 +20084,11 @@
       </summary>
       <div class="guide-body">
         
-        
-        <div class="guide-section-label">Eligible universe</div>
-        <div class="guide-universe">
-          <span class="guide-universe-label">All 32 instruments held simultaneously, sized by inverse volatility</span>
-          <div class="guide-universe-chips"><span class="chip chip--sm" title="Nasdaq-100 ETF">QQQ</span> <span class="chip chip--sm" title="S&P 500 ETF (Vanguard)">VOO</span> <span class="chip chip--sm" title="S&P 500 ETF (SPDR)">SPY</span> <span class="chip chip--sm" title="Total US Market ETF">VTI</span> <span class="chip chip--sm" title="International ex-US ETF">VXUS</span> <span class="chip chip--sm" title="EEM">EEM</span> <span class="chip chip--sm" title="IWM">IWM</span> <span class="chip chip--sm" title="S&P 500 Momentum ETF">SPMO</span> <span class="chip chip--sm" title="Large-Cap Growth ETF">SCHG</span> <span class="chip chip--sm" title="Small-Cap Value ETF">VBR</span> <span class="chip chip--sm" title="Technology Sector ETF">VGT</span> <span class="chip chip--sm" title="Semiconductor ETF">SOXX</span> <span class="chip chip--sm" title="XLE">XLE</span> <span class="chip chip--sm" title="XLV">XLV</span> <span class="chip chip--sm" title="XLF">XLF</span> <span class="chip chip--sm" title="3× Nasdaq-100 (leveraged)">TQQQ</span> <span class="chip chip--sm" title="3× S&P 500 (leveraged)">UPRO</span> <span class="chip chip--sm" title="3× 20-yr Treasury (leveraged)">TMF</span> <span class="chip chip--sm" title="Gold ETF">GLD</span> <span class="chip chip--sm" title="US REIT ETF">VNQ</span> <span class="chip chip--sm" title="DBC">DBC</span> <span class="chip chip--sm" title="Bitcoin">BTC-USD</span> <span class="chip chip--sm" title="Total Bond Market ETF">BND</span> <span class="chip chip--sm" title="HYG">HYG</span> <span class="chip chip--sm" title="TIP">TIP</span> <span class="chip chip--sm" title="20-yr Treasury ETF">TLT</span> <span class="chip chip--sm" title="Short-Term Treasury ETF">SHY</span> <span class="chip chip--sm" title="Apple">AAPL</span> <span class="chip chip--sm" title="Microsoft">MSFT</span> <span class="chip chip--sm" title="Nvidia">NVDA</span> <span class="chip chip--sm" title="Amazon">AMZN</span> <span class="chip chip--sm" title="Alphabet">GOOGL</span></div>
-        </div>
+        <div class="guide-section-label">What it does</div>
+        <p class="guide-description">Bridgewater All-Weather style: size each position so its risk contribution (volatility × weight) is equal across all assets. Low-volatility assets (bonds) receive larger weights than high-volatility assets (equities, crypto).</p>
         <div class="guide-section-label">Step-by-step</div>
         <ol class="guide-steps">
-          <li>On the 1st business day of each month, calculate the 3-month return volatility (std dev of daily returns) for each fund.</li><li>Set each fund's weight proportional to 1 ÷ its volatility, then normalize so all weights sum to 100%.</li><li>Rebalance to those weights. Low-volatility assets (bonds, gold) will receive a higher weight than high-volatility ones (equities, crypto).</li>
+          <li>Compute 3-month volatility for each fund. 2. Weight = 1 / volatility, normalized to 100%. 3. Rebalance monthly.</li>
         </ol>
         
         <div class="guide-section-label">Trade history (126 rebalances over backtest period)</div>
@@ -20799,8 +20731,7 @@
           </table>
         </div>
         <div class="guide-meta-row">
-          <span class="guide-meta-item"><span class="guide-meta-label">Rebalance frequency</span> monthly</span>
-          <span class="guide-meta-item"><span class="guide-meta-label">Implementation effort</span> Medium — needs 3-month volatility calculation per fund monthly</span>
+          <span class="guide-meta-item"><span class="guide-meta-label">Rebalance</span> monthly</span>
         </div>
       </div>
     </details>

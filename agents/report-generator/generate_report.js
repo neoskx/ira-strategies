@@ -15,8 +15,9 @@
  */
 'use strict';
 
-const fs = require('fs');
+const fs   = require('fs');
 const path = require('path');
+const { execSync } = require('child_process');
 
 // ── CLI args ──────────────────────────────────────────────────────────────────
 
@@ -72,6 +73,45 @@ function loadProfile(profilePath) {
     horizon:           get('investment_horizon'),
     minBacktestYears:  get('min_backtest_years'),
   };
+}
+
+// ── Strategy MD loader ────────────────────────────────────────────────────────
+
+function loadStrategyMdMap(strategiesDir) {
+  const map = {}; // strategy name → { folder, description, logic }
+  if (!fs.existsSync(strategiesDir)) return map;
+  for (const folder of fs.readdirSync(strategiesDir)) {
+    const mdPath = path.join(strategiesDir, folder, 'strategy.md');
+    if (!fs.existsSync(mdPath)) continue;
+    try {
+      const content = fs.readFileSync(mdPath, 'utf8');
+      const nameMatch = content.match(/^name:\s*["']?(.+?)["']?\s*$/m);
+      if (!nameMatch) continue;
+      const name = nameMatch[1].trim();
+      const section = key => {
+        const m = content.match(new RegExp(`## ${key}\\n+([\\s\\S]*?)(?=\\n## |\\n---\\s*$|$)`));
+        return m ? m[1].trim() : '';
+      };
+      map[name] = { folder, description: section('Description'), logic: section('Logic') };
+    } catch { /* skip malformed files */ }
+  }
+  return map;
+}
+
+function getRepoUrl() {
+  try {
+    const remote = execSync('git remote get-url origin 2>/dev/null', { encoding: 'utf8' }).trim();
+    return remote.replace(/^git@github\.com:/, 'https://github.com/').replace(/\.git$/, '');
+  } catch { return ''; }
+}
+
+function renderLogicMd(logic) {
+  if (!logic) return '<li>See the strategy spec for details.</li>';
+  return logic.split('\n')
+    .map(l => l.trim())
+    .filter(Boolean)
+    .map(l => `<li>${l.replace(/^\d+\.\s*/, '').replace(/^[-*]\s*/, '')}</li>`)
+    .join('');
 }
 
 // ── Domain knowledge ──────────────────────────────────────────────────────────
@@ -437,17 +477,20 @@ function buildInstructions(strategyName, rebalanceRule) {
   return { steps: ['Refer to strategy documentation for implementation details.'], when: rebalanceRule, effort: 'Unknown' };
 }
 
-function strategyGuide(results) {
+function strategyGuide(results, mdMap, repoUrl) {
   if (results.length === 0) return '';
   const medals = ['🥇', '🥈', '🥉'];
   return `
   <div class="guide-card">
     <h2>Implementation Guide — Ranked by Sharpe</h2>
-    <p class="guide-intro">Expand each strategy below to see exactly what to buy, when to act, and how to make each trade decision. Strategies are ordered by Sharpe ratio (best risk-adjusted performance first).</p>
+    <p class="guide-intro">Expand each strategy to see what it does, step-by-step instructions, and its full trade history from the backtest. Ranked by Sharpe ratio.</p>
     ${results.map((r, i) => {
       const rank = i + 1;
       const m = r.metrics;
-      const instr = buildInstructions(r.strategy, r.rebalance_rule);
+      const md = mdMap[r.strategy] || {};
+      const mdLink = (md.folder && repoUrl)
+        ? `${repoUrl}/blob/main/data/strategies/${md.folder}/strategy.md`
+        : '';
       const isTop = rank <= 3;
       const medal = medals[i] || '';
       return `
@@ -456,7 +499,10 @@ function strategyGuide(results) {
         <div class="guide-summary-left">
           <span class="guide-rank-badge rank-${rank <= 3 ? rank : 'other'}">${medal || '#' + rank}</span>
           <div>
-            <div class="guide-strategy-name">${r.label}</div>
+            <div class="guide-strategy-name">
+              ${r.label}
+              ${mdLink ? `<a class="guide-md-link" href="${mdLink}" target="_blank" title="View strategy spec">spec&nbsp;↗</a>` : ''}
+            </div>
             <div class="guide-summary-metrics">
               Sharpe&nbsp;<strong>${fmt.num(m.sharpe)}</strong>
               &nbsp;·&nbsp; CAGR&nbsp;<strong class="${m.cagr >= 0 ? 'pos' : 'neg'}">${fmt.pct(m.cagr)}</strong>
@@ -468,25 +514,12 @@ function strategyGuide(results) {
         <span class="guide-chevron">›</span>
       </summary>
       <div class="guide-body">
-        ${instr.what ? `
-        <div class="guide-section-label">Fixed holdings</div>
-        <div class="guide-alloc-row">
-          ${instr.what.map(a => `
-          <div class="guide-alloc-item">
-            <div class="guide-alloc-pct">${a.pct}%</div>
-            <div class="guide-alloc-ticker">${a.ticker}</div>
-            <div class="guide-alloc-name">${TICKER_NAMES[a.ticker] || ''}</div>
-          </div>`).join('')}
-        </div>` : ''}
-        ${instr.universe ? `
-        <div class="guide-section-label">Eligible universe</div>
-        <div class="guide-universe">
-          <span class="guide-universe-label">${instr.universe.label}</span>
-          <div class="guide-universe-chips">${instr.universe.chips}</div>
-        </div>` : ''}
+        ${md.description ? `
+        <div class="guide-section-label">What it does</div>
+        <p class="guide-description">${md.description}</p>` : ''}
         <div class="guide-section-label">Step-by-step</div>
         <ol class="guide-steps">
-          ${instr.steps.map(s => `<li>${s}</li>`).join('')}
+          ${renderLogicMd(md.logic)}
         </ol>
         ${r.rebalance_log && r.rebalance_log.length > 0 ? `
         <div class="guide-section-label">Trade history (${r.rebalance_log.length} rebalances over backtest period)</div>
@@ -505,8 +538,7 @@ function strategyGuide(results) {
         </div>` : `
         <div class="trade-log-empty">Trade history available after next backtest run.</div>`}
         <div class="guide-meta-row">
-          <span class="guide-meta-item"><span class="guide-meta-label">Rebalance frequency</span> ${r.rebalance_rule.replace('Calendar(', '').replace(')', '')}</span>
-          <span class="guide-meta-item"><span class="guide-meta-label">Implementation effort</span> ${instr.effort}</span>
+          <span class="guide-meta-item"><span class="guide-meta-label">Rebalance</span> ${r.rebalance_rule.replace('Calendar(', '').replace(')', '')}</span>
         </div>
       </div>
     </details>`;
@@ -561,7 +593,7 @@ function resultsTable(results) {
   </table>`;
 }
 
-function generateHtml(results, total, isFinal, profile) {
+function generateHtml(results, total, isFinal, profile, mdMap, repoUrl) {
   const completed = results.length;
   const pct = Math.round(100 * completed / Math.max(total, 1));
   const isDone = isFinal || completed >= total;
@@ -609,11 +641,13 @@ function generateHtml(results, total, isFinal, profile) {
     .card-metrics { font-size: 0.78rem; color: #4caf50; }
 
     /* Chart */
-    .chart-card { background: white; border-radius: 14px; padding: 1.5rem;
-                  box-shadow: 0 1px 3px rgba(0,0,0,0.07); margin-bottom: 1.5rem; }
+    .chart-card { background: white; border-radius: 14px; padding: 1.5rem 0 0;
+                  box-shadow: 0 1px 3px rgba(0,0,0,0.07); margin-bottom: 1.5rem;
+                  overflow: hidden; }
     .chart-card h2 { font-size: 0.9rem; font-weight: 600; color: #444;
-                     text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1rem; }
-    .chart-wrap { position: relative; height: 320px; }
+                     text-transform: uppercase; letter-spacing: 0.05em;
+                     margin-bottom: 1rem; padding: 0 1.5rem; }
+    .chart-wrap { position: relative; height: 480px; }
 
     /* Table */
     .table-card { background: white; border-radius: 14px; padding: 1.5rem;
@@ -703,6 +737,11 @@ function generateHtml(results, total, isFinal, profile) {
     .guide-meta-item { font-size: 0.75rem; color: #666; }
     .guide-meta-label { font-weight: 600; color: #aaa; text-transform: uppercase;
                         font-size: 0.68rem; letter-spacing: 0.04em; display: block; margin-bottom: 0.1rem; }
+    .guide-description { font-size: 0.82rem; color: #555; line-height: 1.6; margin-bottom: 0.25rem; }
+    .guide-md-link { font-size: 0.68rem; font-weight: 500; color: #2196f3; text-decoration: none;
+                     margin-left: 0.5rem; padding: 1px 5px; border: 1px solid #c8deff;
+                     border-radius: 4px; vertical-align: middle; }
+    .guide-md-link:hover { background: #eef4ff; }
     .guide-universe { margin-bottom: 0.25rem; }
     .guide-universe-label { font-size: 0.76rem; color: #555; display: block; margin-bottom: 0.4rem; font-style: italic; }
     .guide-universe-chips { display: flex; flex-wrap: wrap; gap: 0.3rem; }
@@ -733,7 +772,6 @@ function generateHtml(results, total, isFinal, profile) {
       <div class="progress-bar-bg"><div class="progress-bar-fill"></div></div>
     </div>
 
-    ${profileContextCard(profile)}
     ${summaryCards(results)}
     ${equityChart(results)}
 
@@ -742,7 +780,7 @@ function generateHtml(results, total, isFinal, profile) {
       ${resultsTable(results)}
     </div>
 
-    ${strategyGuide(results)}
+    ${strategyGuide(results, mdMap, repoUrl)}
   </div>
   <script>
   (function() {
@@ -784,7 +822,10 @@ function main() {
   const results = loadResults(opts.resultsDir);
   const total = opts.total || results.length;
   const profile = loadProfile(opts.profile);
-  const html = generateHtml(results, total, opts.final, profile);
+  const strategiesDir = path.resolve(path.dirname(opts.output), '..', 'strategies');
+  const mdMap = loadStrategyMdMap(strategiesDir);
+  const repoUrl = getRepoUrl();
+  const html = generateHtml(results, total, opts.final, profile, mdMap, repoUrl);
 
   const outPath = path.resolve(opts.output);
   fs.mkdirSync(path.dirname(outPath), { recursive: true });
