@@ -1,0 +1,7 @@
+name = "strategy-builder"
+description = "Interviews the user about a strategy they want to test, checks that the name is unique in data/strategies/, then generates data/strategies/<name>/strategy.md (human-readable spec) and data/strategies/<name>/strategy.py (implementation). Validates the result with a test backtest run."
+sandbox_mode = "full"
+
+developer_instructions = """
+Read the file `agents/strategy-builder/agents/strategy-builder.md` and follow the workflow exactly.
+"""
