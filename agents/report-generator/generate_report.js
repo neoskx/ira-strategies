@@ -193,6 +193,10 @@ function numCell(v) {
   return `<td data-val="${v ?? ''}">${fmt.num(v)}</td>`;
 }
 
+function toAnchorId(label) {
+  return 'guide-' + label.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+}
+
 // ── Chart data ────────────────────────────────────────────────────────────────
 
 const PALETTE = ['#2196f3', '#4caf50', '#ff9800', '#9c27b0', '#f44336'];
@@ -494,7 +498,7 @@ function strategyGuide(results, mdMap, repoUrl) {
       const isTop = rank <= 3;
       const medal = medals[i] || '';
       return `
-    <details class="guide-strategy" ${isTop ? 'open' : ''}>
+    <details class="guide-strategy" id="${toAnchorId(r.label)}" ${isTop ? 'open' : ''}>
       <summary class="guide-summary">
         <div class="guide-summary-left">
           <span class="guide-rank-badge rank-${rank <= 3 ? rank : 'other'}">${medal || '#' + rank}</span>
@@ -556,7 +560,7 @@ function resultsTable(results) {
     return `
     <tr class="rank-${rank <= 3 ? rank : 'other'}">
       <td class="td-rank" data-val="${rank}">${rank}</td>
-      <td class="td-label" data-val="${r.label}" title="${getStrategyNotes(r.strategy) || r.strategy}">${r.label}</td>
+      <td class="td-label" data-val="${r.label}" title="${getStrategyNotes(r.strategy) || r.strategy}"><a class="strategy-anchor" href="#${toAnchorId(r.label)}">${r.label}</a></td>
       ${pctCell(m.cagr)}
       <td data-val="${m.sharpe ?? ''}"><strong>${fmt.num(m.sharpe)}</strong></td>
       ${numCell(m.sortino)}
@@ -663,6 +667,9 @@ function generateHtml(results, total, isFinal, profile, mdMap, repoUrl) {
     .td-rank { font-weight: 600; color: #888; width: 2rem; }
     .td-label { max-width: 280px; overflow: hidden; text-overflow: ellipsis;
                 font-weight: 500; color: #1a1a2e; }
+    .strategy-anchor { color: inherit; text-decoration: none; }
+    .strategy-anchor:hover { color: #2196f3; text-decoration: underline; }
+    html { scroll-behavior: smooth; }
     tr.rank-1 td { background: #fffde7; }
     tr.rank-2 td { background: #fafafa; }
     tr.rank-3 td { background: #fff8f5; }
@@ -782,6 +789,22 @@ function generateHtml(results, total, isFinal, profile, mdMap, repoUrl) {
 
     ${strategyGuide(results, mdMap, repoUrl)}
   </div>
+  <script>
+  // Open the target <details> card when navigating via anchor link
+  (function() {
+    function openTarget() {
+      const id = location.hash.slice(1);
+      if (!id) return;
+      const el = document.getElementById(id);
+      if (el && el.tagName === 'DETAILS') el.open = true;
+    }
+    openTarget();
+    window.addEventListener('hashchange', openTarget);
+    document.querySelectorAll('a.strategy-anchor').forEach(a => {
+      a.addEventListener('click', () => setTimeout(openTarget, 50));
+    });
+  })();
+  </script>
   <script>
   (function() {
     const table = document.getElementById('resultsTable');

@@ -60,6 +60,9 @@
     .td-rank { font-weight: 600; color: #888; width: 2rem; }
     .td-label { max-width: 280px; overflow: hidden; text-overflow: ellipsis;
                 font-weight: 500; color: #1a1a2e; }
+    .strategy-anchor { color: inherit; text-decoration: none; }
+    .strategy-anchor:hover { color: #2196f3; text-decoration: underline; }
+    html { scroll-behavior: smooth; }
     tr.rank-1 td { background: #fffde7; }
     tr.rank-2 td { background: #fafafa; }
     tr.rank-3 td { background: #fff8f5; }
@@ -256,7 +259,7 @@
     <tbody>
     <tr class="rank-1">
       <td class="td-rank" data-val="1">1</td>
-      <td class="td-label" data-val="AdaptiveAA(top3, 12m mom, 3m vol) | Calendar(monthly)" title="Selects top N assets by risk-adjusted momentum (momentum ÷ volatility), then sizes them with inverse-volatility weighting. Research-backed combination of two proven factors.">AdaptiveAA(top3, 12m mom, 3m vol) | Calendar(monthly)</td>
+      <td class="td-label" data-val="AdaptiveAA(top3, 12m mom, 3m vol) | Calendar(monthly)" title="Selects top N assets by risk-adjusted momentum (momentum ÷ volatility), then sizes them with inverse-volatility weighting. Research-backed combination of two proven factors."><a class="strategy-anchor" href="#guide-adaptiveaa-top3-12m-mom-3m-vol-calendar-monthly">AdaptiveAA(top3, 12m mom, 3m vol) | Calendar(monthly)</a></td>
       <td class="pos" data-val="0.2976491522529563">29.8%</td>
       <td data-val="0.9179291236539062"><strong>0.92</strong></td>
       <td data-val="1.129999836700856">1.13</td>
@@ -271,7 +274,7 @@
     </tr>
     <tr class="rank-2">
       <td class="td-rank" data-val="2">2</td>
-      <td class="td-label" data-val="AdaptiveAA(top5, 12m mom, 3m vol) | Calendar(monthly)" title="Selects top N assets by risk-adjusted momentum (momentum ÷ volatility), then sizes them with inverse-volatility weighting. Research-backed combination of two proven factors.">AdaptiveAA(top5, 12m mom, 3m vol) | Calendar(monthly)</td>
+      <td class="td-label" data-val="AdaptiveAA(top5, 12m mom, 3m vol) | Calendar(monthly)" title="Selects top N assets by risk-adjusted momentum (momentum ÷ volatility), then sizes them with inverse-volatility weighting. Research-backed combination of two proven factors."><a class="strategy-anchor" href="#guide-adaptiveaa-top5-12m-mom-3m-vol-calendar-monthly">AdaptiveAA(top5, 12m mom, 3m vol) | Calendar(monthly)</a></td>
       <td class="pos" data-val="0.2259889997935931">22.6%</td>
       <td data-val="0.8213246472333909"><strong>0.82</strong></td>
       <td data-val="0.9826387296661379">0.98</td>
@@ -286,7 +289,7 @@
     </tr>
     <tr class="rank-3">
       <td class="td-rank" data-val="3">3</td>
-      <td class="td-label" data-val="MomentumRotation(top5, 12m) | Calendar(monthly)" title="Ranks assets by 12-month price return and holds the top N. Rotates monthly. Performs well in trending markets; can lag in choppy sideways periods.">MomentumRotation(top5, 12m) | Calendar(monthly)</td>
+      <td class="td-label" data-val="MomentumRotation(top5, 12m) | Calendar(monthly)" title="Ranks assets by 12-month price return and holds the top N. Rotates monthly. Performs well in trending markets; can lag in choppy sideways periods."><a class="strategy-anchor" href="#guide-momentumrotation-top5-12m-calendar-monthly">MomentumRotation(top5, 12m) | Calendar(monthly)</a></td>
       <td class="pos" data-val="0.25147117397873187">25.1%</td>
       <td data-val="0.8130947305265397"><strong>0.81</strong></td>
       <td data-val="1.0049927798574618">1.00</td>
@@ -301,7 +304,7 @@
     </tr>
     <tr class="rank-other">
       <td class="td-rank" data-val="4">4</td>
-      <td class="td-label" data-val="MaxSharpe(36m lookback) | Calendar(quarterly)" title="Mean-variance optimization: finds the portfolio weight mix that maximizes the Sharpe ratio over a 36-month lookback. Model-dependent; sensitive to estimation error.">MaxSharpe(36m lookback) | Calendar(quarterly)</td>
+      <td class="td-label" data-val="MaxSharpe(36m lookback) | Calendar(quarterly)" title="Mean-variance optimization: finds the portfolio weight mix that maximizes the Sharpe ratio over a 36-month lookback. Model-dependent; sensitive to estimation error."><a class="strategy-anchor" href="#guide-maxsharpe-36m-lookback-calendar-quarterly">MaxSharpe(36m lookback) | Calendar(quarterly)</a></td>
       <td class="pos" data-val="0.28701078569266514">28.7%</td>
       <td data-val="0.7265808100660311"><strong>0.73</strong></td>
       <td data-val="0.9004537537755225">0.90</td>
@@ -316,7 +319,7 @@
     </tr>
     <tr class="rank-other">
       <td class="td-rank" data-val="5">5</td>
-      <td class="td-label" data-val="MomentumRotation(top3, 12m) | Calendar(monthly)" title="Ranks assets by 12-month price return and holds the top N. Rotates monthly. Performs well in trending markets; can lag in choppy sideways periods.">MomentumRotation(top3, 12m) | Calendar(monthly)</td>
+      <td class="td-label" data-val="MomentumRotation(top3, 12m) | Calendar(monthly)" title="Ranks assets by 12-month price return and holds the top N. Rotates monthly. Performs well in trending markets; can lag in choppy sideways periods."><a class="strategy-anchor" href="#guide-momentumrotation-top3-12m-calendar-monthly">MomentumRotation(top3, 12m) | Calendar(monthly)</a></td>
       <td class="pos" data-val="0.23892201580226424">23.9%</td>
       <td data-val="0.6920938954363086"><strong>0.69</strong></td>
       <td data-val="0.8547480977202966">0.85</td>
@@ -331,7 +334,7 @@
     </tr>
     <tr class="rank-other">
       <td class="td-rank" data-val="6">6</td>
-      <td class="td-label" data-val="QqqVooSpyAdaptive(12m mom, 3m vol) | Calendar(monthly)" title="Constrained to QQQ, VOO, and SPY. Picks the strongest index ETF by risk-adjusted momentum each month. Splits 50/50 between VOO and SPY when an S&P 500 ETF wins.">QqqVooSpyAdaptive(12m mom, 3m vol) | Calendar(monthly)</td>
+      <td class="td-label" data-val="QqqVooSpyAdaptive(12m mom, 3m vol) | Calendar(monthly)" title="Constrained to QQQ, VOO, and SPY. Picks the strongest index ETF by risk-adjusted momentum each month. Splits 50/50 between VOO and SPY when an S&P 500 ETF wins."><a class="strategy-anchor" href="#guide-qqqvoospyadaptive-12m-mom-3m-vol-calendar-monthly">QqqVooSpyAdaptive(12m mom, 3m vol) | Calendar(monthly)</a></td>
       <td class="pos" data-val="0.1329156081041991">13.3%</td>
       <td data-val="0.5833295879084218"><strong>0.58</strong></td>
       <td data-val="0.7320379040682512">0.73</td>
@@ -346,7 +349,7 @@
     </tr>
     <tr class="rank-other">
       <td class="td-rank" data-val="7">7</td>
-      <td class="td-label" data-val="EqualWeight(32 assets) | Calendar(monthly)" title="1/N diversification across all assets in the universe. No market view required — every asset gets an equal slice, rebalanced monthly.">EqualWeight(32 assets) | Calendar(monthly)</td>
+      <td class="td-label" data-val="EqualWeight(32 assets) | Calendar(monthly)" title="1/N diversification across all assets in the universe. No market view required — every asset gets an equal slice, rebalanced monthly."><a class="strategy-anchor" href="#guide-equalweight-32-assets-calendar-monthly">EqualWeight(32 assets) | Calendar(monthly)</a></td>
       <td class="pos" data-val="0.12276359725138342">12.3%</td>
       <td data-val="0.5387648389430529"><strong>0.54</strong></td>
       <td data-val="0.6122295670152368">0.61</td>
@@ -361,7 +364,7 @@
     </tr>
     <tr class="rank-other">
       <td class="td-rank" data-val="8">8</td>
-      <td class="td-label" data-val="MinVariance(36m lookback) | Calendar(quarterly)" title="Minimizes portfolio volatility regardless of return. Capital preservation first. Suits conservative investors; lower absolute return than equity-heavy strategies.">MinVariance(36m lookback) | Calendar(quarterly)</td>
+      <td class="td-label" data-val="MinVariance(36m lookback) | Calendar(quarterly)" title="Minimizes portfolio volatility regardless of return. Capital preservation first. Suits conservative investors; lower absolute return than equity-heavy strategies."><a class="strategy-anchor" href="#guide-minvariance-36m-lookback-calendar-quarterly">MinVariance(36m lookback) | Calendar(quarterly)</a></td>
       <td class="pos" data-val="0.17727557729152021">17.7%</td>
       <td data-val="0.5140196085311883"><strong>0.51</strong></td>
       <td data-val="0.6234301249939248">0.62</td>
@@ -376,7 +379,7 @@
     </tr>
     <tr class="rank-other">
       <td class="td-rank" data-val="9">9</td>
-      <td class="td-label" data-val="DualMomentum(12m) | Calendar(monthly)" title="Combines relative momentum (which equity wins?) with absolute momentum (are equities beating cash?). Defensively switches to bonds when trend is down.">DualMomentum(12m) | Calendar(monthly)</td>
+      <td class="td-label" data-val="DualMomentum(12m) | Calendar(monthly)" title="Combines relative momentum (which equity wins?) with absolute momentum (are equities beating cash?). Defensively switches to bonds when trend is down."><a class="strategy-anchor" href="#guide-dualmomentum-12m-calendar-monthly">DualMomentum(12m) | Calendar(monthly)</a></td>
       <td class="pos" data-val="0.10690198989109923">10.7%</td>
       <td data-val="0.42452273569405086"><strong>0.42</strong></td>
       <td data-val="0.5219358119817245">0.52</td>
@@ -391,7 +394,7 @@
     </tr>
     <tr class="rank-other">
       <td class="td-rank" data-val="10">10</td>
-      <td class="td-label" data-val="TrendFollowing(200d MA) | Calendar(monthly)" title="200-day moving average filter: holds equities above the trend line, shifts to bonds below it. Reduces crash exposure at the cost of whipsaws.">TrendFollowing(200d MA) | Calendar(monthly)</td>
+      <td class="td-label" data-val="TrendFollowing(200d MA) | Calendar(monthly)" title="200-day moving average filter: holds equities above the trend line, shifts to bonds below it. Reduces crash exposure at the cost of whipsaws."><a class="strategy-anchor" href="#guide-trendfollowing-200d-ma-calendar-monthly">TrendFollowing(200d MA) | Calendar(monthly)</a></td>
       <td class="pos" data-val="0.10079307577356178">10.1%</td>
       <td data-val="0.41535339234653323"><strong>0.42</strong></td>
       <td data-val="0.5010411018440764">0.50</td>
@@ -406,7 +409,7 @@
     </tr>
     <tr class="rank-other">
       <td class="td-rank" data-val="11">11</td>
-      <td class="td-label" data-val="QqqMonthlyDCA | Calendar(daily)" title="QqqMonthlyDCA">QqqMonthlyDCA | Calendar(daily)</td>
+      <td class="td-label" data-val="QqqMonthlyDCA | Calendar(daily)" title="QqqMonthlyDCA"><a class="strategy-anchor" href="#guide-qqqmonthlydca-calendar-daily">QqqMonthlyDCA | Calendar(daily)</a></td>
       <td class="pos" data-val="0.08347313168442883">8.3%</td>
       <td data-val="0.4010423344471944"><strong>0.40</strong></td>
       <td data-val="0.5163664883212574">0.52</td>
@@ -421,7 +424,7 @@
     </tr>
     <tr class="rank-other">
       <td class="td-rank" data-val="12">12</td>
-      <td class="td-label" data-val="FixedWeight(VTI:60%, BND:40%) | Calendar(annual)" title="Holds a fixed allocation, rebalanced on schedule. Simple, low-cost, and easy to understand. No active decisions after setup.">FixedWeight(VTI:60%, BND:40%) | Calendar(annual)</td>
+      <td class="td-label" data-val="FixedWeight(VTI:60%, BND:40%) | Calendar(annual)" title="Holds a fixed allocation, rebalanced on schedule. Simple, low-cost, and easy to understand. No active decisions after setup."><a class="strategy-anchor" href="#guide-fixedweight-vti-60-bnd-40-calendar-annual">FixedWeight(VTI:60%, BND:40%) | Calendar(annual)</a></td>
       <td class="pos" data-val="0.06618719711791199">6.6%</td>
       <td data-val="0.26243893961026676"><strong>0.26</strong></td>
       <td data-val="0.32462059568589413">0.32</td>
@@ -436,7 +439,7 @@
     </tr>
     <tr class="rank-other">
       <td class="td-rank" data-val="13">13</td>
-      <td class="td-label" data-val="RiskParity(3m vol) | Calendar(monthly)" title="Sizes positions so each asset contributes equal risk (volatility). Bridgewater All-Weather style. High Sharpe ratio, lower absolute return than pure equity.">RiskParity(3m vol) | Calendar(monthly)</td>
+      <td class="td-label" data-val="RiskParity(3m vol) | Calendar(monthly)" title="Sizes positions so each asset contributes equal risk (volatility). Bridgewater All-Weather style. High Sharpe ratio, lower absolute return than pure equity."><a class="strategy-anchor" href="#guide-riskparity-3m-vol-calendar-monthly">RiskParity(3m vol) | Calendar(monthly)</a></td>
       <td class="pos" data-val="0.047713945726195695">4.8%</td>
       <td data-val="0.07496705847489103"><strong>0.07</strong></td>
       <td data-val="0.08246933156188987">0.08</td>
@@ -457,7 +460,7 @@
     <h2>Implementation Guide — Ranked by Sharpe</h2>
     <p class="guide-intro">Expand each strategy to see what it does, step-by-step instructions, and its full trade history from the backtest. Ranked by Sharpe ratio.</p>
     
-    <details class="guide-strategy" open>
+    <details class="guide-strategy" id="guide-adaptiveaa-top3-12m-mom-3m-vol-calendar-monthly" open>
       <summary class="guide-summary">
         <div class="guide-summary-left">
           <span class="guide-rank-badge rank-1">🥇</span>
@@ -1129,7 +1132,7 @@
         </div>
       </div>
     </details>
-    <details class="guide-strategy" open>
+    <details class="guide-strategy" id="guide-adaptiveaa-top5-12m-mom-3m-vol-calendar-monthly" open>
       <summary class="guide-summary">
         <div class="guide-summary-left">
           <span class="guide-rank-badge rank-2">🥈</span>
@@ -1801,7 +1804,7 @@
         </div>
       </div>
     </details>
-    <details class="guide-strategy" open>
+    <details class="guide-strategy" id="guide-momentumrotation-top5-12m-calendar-monthly" open>
       <summary class="guide-summary">
         <div class="guide-summary-left">
           <span class="guide-rank-badge rank-3">🥉</span>
@@ -2468,7 +2471,7 @@
         </div>
       </div>
     </details>
-    <details class="guide-strategy" >
+    <details class="guide-strategy" id="guide-maxsharpe-36m-lookback-calendar-quarterly" >
       <summary class="guide-summary">
         <div class="guide-summary-left">
           <span class="guide-rank-badge rank-other">#4</span>
@@ -2720,7 +2723,7 @@
         </div>
       </div>
     </details>
-    <details class="guide-strategy" >
+    <details class="guide-strategy" id="guide-momentumrotation-top3-12m-calendar-monthly" >
       <summary class="guide-summary">
         <div class="guide-summary-left">
           <span class="guide-rank-badge rank-other">#5</span>
@@ -3387,7 +3390,7 @@
         </div>
       </div>
     </details>
-    <details class="guide-strategy" >
+    <details class="guide-strategy" id="guide-qqqvoospyadaptive-12m-mom-3m-vol-calendar-monthly" >
       <summary class="guide-summary">
         <div class="guide-summary-left">
           <span class="guide-rank-badge rank-other">#6</span>
@@ -4049,7 +4052,7 @@
         </div>
       </div>
     </details>
-    <details class="guide-strategy" >
+    <details class="guide-strategy" id="guide-equalweight-32-assets-calendar-monthly" >
       <summary class="guide-summary">
         <div class="guide-summary-left">
           <span class="guide-rank-badge rank-other">#7</span>
@@ -4721,7 +4724,7 @@
         </div>
       </div>
     </details>
-    <details class="guide-strategy" >
+    <details class="guide-strategy" id="guide-minvariance-36m-lookback-calendar-quarterly" >
       <summary class="guide-summary">
         <div class="guide-summary-left">
           <span class="guide-rank-badge rank-other">#8</span>
@@ -4973,7 +4976,7 @@
         </div>
       </div>
     </details>
-    <details class="guide-strategy" >
+    <details class="guide-strategy" id="guide-dualmomentum-12m-calendar-monthly" >
       <summary class="guide-summary">
         <div class="guide-summary-left">
           <span class="guide-rank-badge rank-other">#9</span>
@@ -5645,7 +5648,7 @@
         </div>
       </div>
     </details>
-    <details class="guide-strategy" >
+    <details class="guide-strategy" id="guide-trendfollowing-200d-ma-calendar-monthly" >
       <summary class="guide-summary">
         <div class="guide-summary-left">
           <span class="guide-rank-badge rank-other">#10</span>
@@ -6317,7 +6320,7 @@
         </div>
       </div>
     </details>
-    <details class="guide-strategy" >
+    <details class="guide-strategy" id="guide-qqqmonthlydca-calendar-daily" >
       <summary class="guide-summary">
         <div class="guide-summary-left">
           <span class="guide-rank-badge rank-other">#11</span>
@@ -19966,7 +19969,7 @@ Tests whether spreading the monthly re-entry reduces timing risk compared to con
         </div>
       </div>
     </details>
-    <details class="guide-strategy" >
+    <details class="guide-strategy" id="guide-fixedweight-vti-60-bnd-40-calendar-annual" >
       <summary class="guide-summary">
         <div class="guide-summary-left">
           <span class="guide-rank-badge rank-other">#12</span>
@@ -20063,7 +20066,7 @@ Tests whether spreading the monthly re-entry reduces timing risk compared to con
         </div>
       </div>
     </details>
-    <details class="guide-strategy" >
+    <details class="guide-strategy" id="guide-riskparity-3m-vol-calendar-monthly" >
       <summary class="guide-summary">
         <div class="guide-summary-left">
           <span class="guide-rank-badge rank-other">#13</span>
@@ -20737,6 +20740,22 @@ Tests whether spreading the monthly re-entry reduces timing risk compared to con
     </details>
   </div>
   </div>
+  <script>
+  // Open the target <details> card when navigating via anchor link
+  (function() {
+    function openTarget() {
+      const id = location.hash.slice(1);
+      if (!id) return;
+      const el = document.getElementById(id);
+      if (el && el.tagName === 'DETAILS') el.open = true;
+    }
+    openTarget();
+    window.addEventListener('hashchange', openTarget);
+    document.querySelectorAll('a.strategy-anchor').forEach(a => {
+      a.addEventListener('click', () => setTimeout(openTarget, 50));
+    });
+  })();
+  </script>
   <script>
   (function() {
     const table = document.getElementById('resultsTable');
