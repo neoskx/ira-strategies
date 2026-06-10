@@ -33,6 +33,13 @@ The workflow writes:
 - `data/results/*.json` — one result per completed backtest
 - `data/reports/index.html` — final ranked report
 
+Current backtest logic:
+
+- Strategies trade only inside a fixed preselected asset universe.
+- Rebalance accounting uses adjusted close, so the backtest is total-return oriented.
+- The report shows buy-and-hold baselines for `QQQ`, `SPY`, and `VOO`.
+- The report also includes a window-stability view across trailing `3Y`, `5Y`, `7Y`, and full-history windows.
+
 ---
 
 ## User Workflow
@@ -126,6 +133,8 @@ flowchart TD
 | `report-generator` | Script | Builds ranked HTML report from result JSON files |
 | `select_strategies.py` | Script | Filters strategy library by user profile constraints |
 
+`agents/strategy/` stays in the workflow as the deterministic strategy-selection layer. The orchestrator uses it to filter the catalog before it launches backtests.
+
 ---
 
 ## Strategy Library
@@ -171,6 +180,8 @@ The runner injects `Strategy`, `RULES`, `pd`, `np` into every file's namespace, 
    User-specific details live in gitignored `data/user_profile.yaml`. Source files are safe for a public repository.
 
 6. **No look-ahead bias.**
+7. **Total-return accounting.**
+   Backtests use adjusted close rather than raw close so dividend-bearing ETFs are compared on a like-for-like basis.
    Strategy implementations only use price data available at the `as_of` date.
 
 ---
@@ -216,6 +227,8 @@ python agents/backtest/run_backtest.py --index 5 --total 1 --json
 node agents/report-generator/generate_report.js --results-dir data/results --total 1
 python agents/orchestration/orchestrate.py run --dry-run
 ```
+
+If you want the stability analysis in the saved result JSON and report, use the orchestrator or pass `--window-stability` to `agents/backtest/run_backtest.py`.
 
 Full workflow:
 ```bash
