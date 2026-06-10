@@ -1,7 +1,7 @@
 # Runtime deps injected: Strategy, RULES, pd, np
 METADATA = {
-    "name": "EqualWeight(32 assets)",
-    "label": "EqualWeight(32 assets) | Calendar(monthly)",
+    "name": "EqualWeight(all assets)",
+    "label": "EqualWeight(all assets) | Calendar(monthly)",
     "rebalance_rule": "monthly",
     "suitable_for": {
         "min_horizon_years": 10, "risk_tolerance": ["moderate", "aggressive"],
@@ -13,7 +13,7 @@ METADATA = {
 class _EqualWeight(Strategy):
     def __init__(self, tickers):
         super().__init__(tickers)
-        self.name = f"EqualWeight({len(tickers)} assets)"
+        self.name = "EqualWeight(all assets)"
 
     def get_weights(self, prices, as_of):
         hist = self._available_prices(prices, as_of)

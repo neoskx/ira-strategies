@@ -1,11 +1,11 @@
 ---
-name: "EqualWeight(32 assets)"
-label: "EqualWeight(32 assets) | Calendar(monthly)"
+name: "EqualWeight(all assets)"
+label: "EqualWeight(all assets) | Calendar(monthly)"
 status: builtin
 ---
 
 ## Description
-Divide the portfolio equally across all 32 instruments in the universe (~3.1% each). No market view required. Relies on diversification to smooth returns and benefit from rebalancing gains.
+Divide the portfolio equally across all assets in the universe. No market view required. Relies on diversification to smooth returns and benefit from rebalancing gains.
 
 ## Logic
 Every month, restore each fund to equal weight by selling overweight positions and buying underweight ones.

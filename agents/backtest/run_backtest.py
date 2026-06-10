@@ -85,8 +85,8 @@ def main():
     label = f"{strategy.name} | {rule.name}"
     print(f"[{args.index + 1}/{args.total}] {label}", flush=True)
 
-    prices = fetch_prices(TICKERS, START_DATE, END_DATE, use_cache=True)
-    result = run_backtest(strategy, rule, prices, START_DATE, END_DATE, INITIAL_CAPITAL)
+    prices, raw_prices = fetch_prices(TICKERS, START_DATE, END_DATE, use_cache=True)
+    result = run_backtest(strategy, rule, prices, raw_prices, START_DATE, END_DATE, INITIAL_CAPITAL)
     out_path = save_result(result, args.results_dir)
 
     m = result["metrics"]

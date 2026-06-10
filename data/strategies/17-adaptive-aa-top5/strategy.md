@@ -8,7 +8,7 @@ status: builtin
 Same as AdaptiveAA top3 but holds the top 5 funds. More diversified with slightly different concentration profile.
 
 ## Logic
-1. Score all 32 funds by risk-adjusted momentum. 2. Keep top 5. 3. Weight by inverse vol. 4. Sell the rest. Repeat monthly.
+1. Score all assets in the universe by risk-adjusted momentum. 2. Keep top 5. 3. Weight by inverse vol. 4. Sell the rest. Repeat monthly.
 
 ## Rebalance frequency
 Monthly.

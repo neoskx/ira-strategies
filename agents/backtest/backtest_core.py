@@ -36,34 +36,83 @@ ASSETS = [
     {"ticker": "VOO",     "category": "Broad ETF"},
     {"ticker": "SPY",     "category": "Broad ETF"},
     {"ticker": "VTI",     "category": "Broad ETF"},
+    {"ticker": "DIA",     "category": "Broad ETF"},
+    {"ticker": "IWF",     "category": "Broad ETF"},
+    {"ticker": "IWD",     "category": "Broad ETF"},
+    {"ticker": "IVE",     "category": "Broad ETF"},
+    {"ticker": "IJR",     "category": "Broad ETF"},
     {"ticker": "VXUS",    "category": "Broad ETF"},
     {"ticker": "EEM",     "category": "Broad ETF"},
     {"ticker": "IWM",     "category": "Broad ETF"},
+    {"ticker": "VEA",     "category": "Broad ETF"},
+    {"ticker": "VWO",     "category": "Broad ETF"},
+    {"ticker": "IEMG",    "category": "Broad ETF"},
+    {"ticker": "EFA",     "category": "Broad ETF"},
+    {"ticker": "EWJ",     "category": "Broad ETF"},
+    {"ticker": "EWG",     "category": "Broad ETF"},
+    {"ticker": "EWU",     "category": "Broad ETF"},
+    {"ticker": "INDA",    "category": "Broad ETF"},
     {"ticker": "SPMO",    "category": "Factor ETF"},
     {"ticker": "SCHG",    "category": "Factor ETF"},
     {"ticker": "VBR",     "category": "Factor ETF"},
+    {"ticker": "VIG",     "category": "Factor ETF"},
+    {"ticker": "SCHD",    "category": "Factor ETF"},
+    {"ticker": "QUAL",    "category": "Factor ETF"},
+    {"ticker": "MTUM",    "category": "Factor ETF"},
+    {"ticker": "USMV",    "category": "Factor ETF"},
+    {"ticker": "MDY",     "category": "Broad ETF"},
+    {"ticker": "IJH",     "category": "Broad ETF"},
+    {"ticker": "IWO",     "category": "Broad ETF"},
+    {"ticker": "IWN",     "category": "Broad ETF"},
     {"ticker": "VGT",     "category": "Sector ETF"},
     {"ticker": "SOXX",    "category": "Sector ETF"},
     {"ticker": "XLE",     "category": "Sector ETF"},
+    {"ticker": "XLB",     "category": "Sector ETF"},
+    {"ticker": "XLI",     "category": "Sector ETF"},
+    {"ticker": "XLP",     "category": "Sector ETF"},
     {"ticker": "XLV",     "category": "Sector ETF"},
     {"ticker": "XLF",     "category": "Sector ETF"},
+    {"ticker": "XLK",     "category": "Sector ETF"},
+    {"ticker": "XLU",     "category": "Sector ETF"},
+    {"ticker": "XLY",     "category": "Sector ETF"},
+    {"ticker": "XLRE",    "category": "Sector ETF"},
+    {"ticker": "SMH",     "category": "Sector ETF"},
+    {"ticker": "XBI",     "category": "Sector ETF"},
     {"ticker": "TQQQ",    "category": "Leveraged ETF"},
     {"ticker": "UPRO",    "category": "Leveraged ETF"},
     {"ticker": "TMF",     "category": "Leveraged ETF"},
     {"ticker": "GLD",     "category": "Alternative"},
+    {"ticker": "IAU",     "category": "Alternative"},
+    {"ticker": "SLV",     "category": "Alternative"},
     {"ticker": "VNQ",     "category": "Alternative"},
     {"ticker": "DBC",     "category": "Alternative"},
+    {"ticker": "USO",     "category": "Alternative"},
     {"ticker": "BTC-USD", "category": "Alternative"},
     {"ticker": "BND",     "category": "Fixed Income"},
+    {"ticker": "AGG",     "category": "Fixed Income"},
+    {"ticker": "IEF",     "category": "Fixed Income"},
     {"ticker": "HYG",     "category": "Fixed Income"},
+    {"ticker": "LQD",     "category": "Fixed Income"},
+    {"ticker": "MUB",     "category": "Fixed Income"},
+    {"ticker": "BSV",     "category": "Fixed Income"},
+    {"ticker": "VCIT",    "category": "Fixed Income"},
+    {"ticker": "EMB",     "category": "Fixed Income"},
+    {"ticker": "BIL",     "category": "Fixed Income"},
     {"ticker": "TIP",     "category": "Fixed Income"},
     {"ticker": "TLT",     "category": "Fixed Income"},
     {"ticker": "SHY",     "category": "Fixed Income"},
+    {"ticker": "SHV",     "category": "Fixed Income"},
+    {"ticker": "UNG",     "category": "Alternative"},
     {"ticker": "AAPL",    "category": "Mega-Cap Stock"},
     {"ticker": "MSFT",    "category": "Mega-Cap Stock"},
     {"ticker": "NVDA",    "category": "Mega-Cap Stock"},
     {"ticker": "AMZN",    "category": "Mega-Cap Stock"},
     {"ticker": "GOOGL",   "category": "Mega-Cap Stock"},
+    {"ticker": "META",    "category": "Mega-Cap Stock"},
+    {"ticker": "TSLA",    "category": "Mega-Cap Stock"},
+    {"ticker": "JPM",     "category": "Mega-Cap Stock"},
+    {"ticker": "UNH",     "category": "Mega-Cap Stock"},
+    {"ticker": "BRK-B",   "category": "Mega-Cap Stock"},
 ]
 TICKERS = [asset["ticker"] for asset in ASSETS]
 
@@ -154,35 +203,59 @@ RULES = {
 # ── Data fetching ─────────────────────────────────────────────────────────────
 
 def fetch_prices(tickers: list[str], start: str, end: str,
-                 use_cache: bool = True) -> pd.DataFrame:
+                 use_cache: bool = True) -> tuple[pd.DataFrame, pd.DataFrame | None]:
     DATA_CACHE.parent.mkdir(parents=True, exist_ok=True)
     cache_key = _cache_key(tickers, start, end)
+    cached_prices = None
+    cached_raw = None
     if use_cache and DATA_CACHE.exists():
         with open(DATA_CACHE, "rb") as f:
             cache = pickle.load(f)
         if isinstance(cache, dict) and cache_key in cache:
-            prices = _clean_prices(cache[cache_key])
-            if not prices.empty:
-                print(f"  [cache] Loaded {len(tickers)} tickers from cache")
-                return prices
+            cached = cache[cache_key]
+            if isinstance(cached, dict):
+                cached_prices = _clean_prices(cached.get("adj_close", pd.DataFrame()))
+                cached_raw = _clean_prices(cached.get("raw_close", pd.DataFrame()))
+                if not cached_prices.empty and not cached_raw.empty:
+                    print(f"  [cache] Loaded {len(tickers)} tickers from cache")
+                    return cached_prices, cached_raw
+            else:
+                cached_prices = _clean_prices(cached)
+                if not cached_prices.empty:
+                    print(f"  [cache] Loaded {len(tickers)} tickers from cache")
     print(f"  [download] Fetching {len(tickers)} tickers from {start} to {end}...")
-    raw = yf.download(tickers, start=start, end=end, auto_adjust=True, progress=False)
-    prices = raw["Close"] if isinstance(raw.columns, pd.MultiIndex) else raw[["Close"]]
-    prices = _clean_prices(prices)
+    raw = yf.download(tickers, start=start, end=end, auto_adjust=False, progress=False)
+    if isinstance(raw.columns, pd.MultiIndex):
+        prices = raw["Adj Close"]
+        raw_prices = raw["Close"]
+    else:
+        prices = raw["Adj Close"] if "Adj Close" in raw.columns else raw["Close"]
+        raw_prices = raw["Close"]
+        if isinstance(prices, pd.Series):
+            prices = prices.to_frame(tickers[0])
+        if isinstance(raw_prices, pd.Series):
+            raw_prices = raw_prices.to_frame(tickers[0])
+    prices = _clean_prices(cached_prices if cached_prices is not None else prices)
+    raw_prices = _clean_prices(raw_prices)
     if not prices.empty:
-        _save_cache(cache_key, prices)
+        _save_cache(cache_key, {"adj_close": prices, "raw_close": raw_prices})
     print(f"  [download] Done - {prices.shape[0]} trading days, {prices.shape[1]} tickers")
-    return prices
+    return prices, (raw_prices if not raw_prices.empty else None)
 
 
 # ── Backtest engine ───────────────────────────────────────────────────────────
 
 def run_backtest(strategy: Strategy, rebalance_rule: RebalanceRule,
-                 prices: pd.DataFrame, start: str, end: str,
+                 prices: pd.DataFrame, raw_prices: pd.DataFrame | None,
+                 start: str, end: str,
                  initial_capital: float = INITIAL_CAPITAL) -> dict:
     prices = prices[start:end].copy()
+    if raw_prices is not None:
+        raw_prices = raw_prices[start:end].copy()
     if prices.empty:
         raise ValueError(f"No price data in range {start}–{end}")
+    if raw_prices is not None and raw_prices.empty:
+        raw_prices = None
 
     rebalance_dates = _get_rebalance_dates(rebalance_rule, start, end, prices.index)
     equity = pd.Series(index=prices.index, dtype=float)
@@ -195,6 +268,7 @@ def run_backtest(strategy: Strategy, rebalance_rule: RebalanceRule,
 
     for date_value in prices.index:
         row = prices.loc[date_value]
+        raw_row = raw_prices.loc[date_value] if raw_prices is not None and date_value in raw_prices.index else row
         portfolio_value = cash + sum(
             holdings.get(t, 0) * row.get(t, np.nan)
             for t in holdings
@@ -233,15 +307,39 @@ def run_backtest(strategy: Strategy, rebalance_rule: RebalanceRule,
             current_weights = valid.copy()
             last_rebalance = date_value
             rebalance_count += 1
+            rebalance_holdings = []
+            for t, w in valid.items():
+                price = float(row[t])
+                raw_close_val = raw_row.get(t, np.nan)
+                raw_close = float(raw_close_val) if not pd.isna(raw_close_val) else price
+                shares = float(holdings[t])
+                rebalance_holdings.append({
+                    "ticker": t,
+                    "weight": round(float(w), 4),
+                    "price": round(price, 4),
+                    "raw_close": round(raw_close, 4),
+                    "price_type": "adjusted_close",
+                    "shares": round(shares, 6),
+                    "share_type": "synthetic",
+                    "market_value": round(price * shares, 2),
+                })
             rebalance_log.append({
                 "date": date_value.strftime("%Y-%m-%d"),
                 "portfolio_value": round(float(portfolio_value), 2),
                 "weights": {t: round(w, 4) for t, w in valid.items()},
+                "holdings": rebalance_holdings,
             })
 
     equity = equity.dropna()
     metrics = compute_metrics(equity)
     metrics["rebalance_count"] = rebalance_count
+    benchmarks = [
+        benchmark for benchmark in (
+            _build_buy_and_hold_benchmark(prices, raw_prices, ticker, start, end, initial_capital)
+            for ticker in ("QQQ", "SPY", "VOO")
+        )
+        if benchmark is not None
+    ]
     return {
         "strategy": strategy.name,
         "rebalance_rule": rebalance_rule.name,
@@ -249,6 +347,7 @@ def run_backtest(strategy: Strategy, rebalance_rule: RebalanceRule,
         "equity": equity,
         "metrics": metrics,
         "rebalance_log": rebalance_log,
+        "benchmarks": benchmarks,
     }
 
 
@@ -298,6 +397,7 @@ def save_result(result: dict, results_dir: str = "data/results") -> Path:
         "equity_dates": [d.isoformat() for d in equity.index],
         "equity_values": [round(float(v), 2) for v in equity.values],
         "rebalance_log": result.get("rebalance_log", []),
+        "benchmarks": result.get("benchmarks", []),
     }
     out_path = out_dir / f"{hashlib.md5(label.encode()).hexdigest()[:8]}.json"
     with open(out_path, "w") as f:
@@ -315,7 +415,7 @@ def _clean_prices(prices: pd.DataFrame) -> pd.DataFrame:
     return prices.sort_index().dropna(how="all").ffill().dropna(how="all")
 
 
-def _save_cache(key, prices: pd.DataFrame):
+def _save_cache(key, prices):
     cache = {}
     if DATA_CACHE.exists():
         with open(DATA_CACHE, "rb") as f:
@@ -377,3 +477,52 @@ def _stress_returns(equity: pd.Series) -> dict:
     if len(q4_2018) > 3:
         result["return_2018q4"] = (q4_2018.iloc[-1] / q4_2018.iloc[0]) - 1
     return result
+
+
+def _build_buy_and_hold_benchmark(
+    prices: pd.DataFrame,
+    raw_prices: pd.DataFrame | None,
+    ticker: str,
+    start: str,
+    end: str,
+    initial_capital: float,
+) -> dict | None:
+    adj_series = None
+    raw_series = None
+
+    if ticker in prices.columns:
+        adj_series = prices[ticker].dropna()
+    if raw_prices is not None and ticker in raw_prices.columns:
+        raw_series = raw_prices[ticker].dropna()
+
+    if adj_series is None or adj_series.empty:
+        fresh = yf.download(ticker, start=start, end=end, auto_adjust=True, progress=False)
+        if isinstance(fresh.columns, pd.MultiIndex):
+            adj_series = fresh["Close"][ticker].dropna() if "Close" in fresh.columns.get_level_values(0) else pd.Series(dtype=float)
+        else:
+            adj_series = fresh["Close"].dropna() if "Close" in fresh.columns else pd.Series(dtype=float)
+
+    if raw_series is None or raw_series.empty:
+        fresh_raw = yf.download(ticker, start=start, end=end, auto_adjust=False, progress=False)
+        if isinstance(fresh_raw.columns, pd.MultiIndex):
+            raw_series = fresh_raw["Close"][ticker].dropna() if "Close" in fresh_raw.columns.get_level_values(0) else pd.Series(dtype=float)
+        else:
+            raw_series = fresh_raw["Close"].dropna() if "Close" in fresh_raw.columns else pd.Series(dtype=float)
+
+    series = adj_series if adj_series is not None and not adj_series.empty else raw_series
+    if series is None or series.empty:
+        return None
+
+    start_price = float(series.iloc[0])
+    if start_price <= 0:
+        return None
+    values = initial_capital * (series / start_price)
+    return {
+        "label": f"{ticker} buy & hold",
+        "ticker": ticker,
+        "price_type": "adjusted_close" if adj_series is not None and not adj_series.empty else "raw_close",
+        "share_type": "synthetic",
+        "start_price": round(start_price, 4),
+        "dates": [d.isoformat() for d in series.index],
+        "values": [round(float(v), 2) for v in values.values],
+    }
