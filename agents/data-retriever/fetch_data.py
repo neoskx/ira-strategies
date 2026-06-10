@@ -22,8 +22,12 @@ DEFAULT_CACHE = PROJECT_ROOT / "data" / "prices.pkl"
 START_DATE = "2016-01-01"
 END_DATE = date.today().isoformat()
 TICKERS = [
-    "QQQ", "VOO", "VTI", "VXUS", "SPMO", "SCHG", "VBR", "VGT", "SOXX",
-    "TQQQ", "UPRO", "TMF", "GLD", "VNQ", "BTC-USD", "BND", "TLT", "SHY",
+    "QQQ", "VOO", "SPY", "VTI", "VXUS", "EEM", "IWM",
+    "SPMO", "SCHG", "VBR",
+    "VGT", "SOXX", "XLE", "XLV", "XLF",
+    "TQQQ", "UPRO", "TMF",
+    "GLD", "VNQ", "DBC", "BTC-USD",
+    "BND", "HYG", "TIP", "TLT", "SHY",
     "AAPL", "MSFT", "NVDA", "AMZN", "GOOGL",
 ]
 

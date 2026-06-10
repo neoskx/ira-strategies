@@ -1,10 +1,3 @@
-Run the `orchestration` subagent to find the best 401k strategies.
+Run the orchestration agent workflow defined in `agents/orchestration/agents/orchestration.md`.
 
-The orchestration agent will:
-1. Load your saved profile from data/user_profile.yaml
-2. Ask about any missing fields (age, risk tolerance, account type)
-3. Select and optionally generate strategies for your constraints
-4. Run all backtests in parallel
-5. Generate data/reports/index.html with ranked results
-
-Pass any context upfront: "Find the best strategies for my 401k. I am 40, moderate risk."
+Pass any context the user provided upfront (age, risk tolerance, account type, or a strategy description) so the agent can skip questions that are already answered.

@@ -1,6 +1,8 @@
 data/*
 !data/reports/
 !data/reports/**
+!data/strategies/
+!data/strategies/**
 __pycache__/
 *.pyc
 *.pkl

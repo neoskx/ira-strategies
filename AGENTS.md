@@ -5,22 +5,21 @@ All agents (Claude Code, Codex CLI, Cursor, Windsurf, Copilot, etc.) must follow
 
 ## Multi-Agent System
 
-This project uses a 6-agent system for 401k strategy optimization. The agents are defined in:
-- `agents/*/agents/*.md` — canonical system prompts (agent-neutral, human-editable)
-- `.claude/agents/*.md` — Claude Code subagent wrappers
-- `.codex/agents/*.toml` — Codex CLI subagent wrappers
+This project uses a multi-agent system for 401k strategy optimization.
 
-| Agent | File | Role |
+| Agent | Type | Role |
 |---|---|---|
-| `orchestration` | `agents/orchestration/` | Entry point; coordinates all other agents |
-| `personal-config` | `agents/personal-config/` | Reads/writes `data/user_profile.yaml` |
-| `strategy` | `agents/strategy/` | Selects + generates strategies by user constraints |
-| `data-retriever` | `agents/data-retriever/` | Ensures price cache is fresh |
-| `backtest` | `agents/backtest/` | Runs one strategy; updates live HTML |
-| `report-generator` | `agents/report-generator/` | Creates and finalizes `data/reports/index.html` |
+| `orchestration` | AI subagent | Entry point; coordinates the full run workflow |
+| `personal-config` | AI subagent | Reads/writes `data/user_profile.yaml` |
+| `strategy-builder` | AI subagent | Interviews user → writes `data/strategies/<name>/strategy.{md,py}` |
+| `data-retriever` | AI subagent | Ensures price cache is fresh |
+| `backtest` | AI subagent | Runs one strategy file; saves result JSON |
+| `report-generator` | Script | Generates `data/reports/index.html` from result JSONs |
 
-**To run:** In Claude Code say "build 401k strategies for [my profile]" or use `/find-best`.
-In Codex CLI, address the `orchestration` agent by name.
+**Strategy selection** is handled by `agents/strategy/select_strategies.py` — a deterministic script called by the orchestrator, not an AI agent. It reads `METADATA` from every `data/strategies/*/strategy.py` and filters by the user profile.
+
+**To run:** Use `/find-best` in Claude Code, or `python agents/orchestration/orchestrate.py run`.
+**To add a strategy:** Use `/build-strategy`.
 
 ### Shared State
 

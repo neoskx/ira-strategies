@@ -115,10 +115,13 @@ def cmd_run(args):
     for result_file in RESULTS_DIR.glob("*.json"):
         result_file.unlink()
 
+    profile_path = str(DATA_DIR / "user_profile.yaml")
+
     # Skeleton report
     _node("report-generator", "generate_report.js",
           "--results-dir", str(RESULTS_DIR),
           "--total", str(total),
+          "--profile", profile_path,
           "--output", str(REPORT_OUTPUT))
 
     def backtest_one(s):
@@ -132,6 +135,7 @@ def cmd_run(args):
         _node("report-generator", "generate_report.js",
               "--results-dir", str(RESULTS_DIR),
               "--total", str(total),
+              "--profile", profile_path,
               "--output", str(REPORT_OUTPUT))
         return s["index"], success, r.stdout, r.stderr
 
@@ -156,6 +160,7 @@ def cmd_run(args):
               "--results-dir", str(RESULTS_DIR),
               "--total", str(total),
               "--final",
+              "--profile", profile_path,
               "--output", str(REPORT_OUTPUT))
     print(f"  {r.stdout.strip()}")
 

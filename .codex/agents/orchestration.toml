@@ -1,5 +1,5 @@
 name = "orchestration"
-description = "Main entry point for 401k strategy optimization. Coordinates the full workflow: load profile, select/generate strategies, fetch data, run parallel backtests, generate report."
+description = "Main entry point for 401k strategy optimization. Interactive workflow: load profile, show existing strategies, optionally build a new custom strategy with the user, then fetch data, run parallel backtests, and generate a ranked report."
 sandbox_mode = "read-only"
 
 developer_instructions = """
