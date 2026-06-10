@@ -14,9 +14,9 @@ You generate and maintain `data/reports/index.html`.
 
 `agents/report-generator/generate_report.js` (Node.js — no npm install required):
 ```bash
-node agents/report-generator/generate_report.js --results-dir data/results --total 17
-node agents/report-generator/generate_report.js --results-dir data/results --total 17 --final
-node agents/report-generator/generate_report.js --output data/reports/index.html --total 17 --final
+node agents/report-generator/generate_report.js --results-dir data/results --total {total_strategies}
+node agents/report-generator/generate_report.js --results-dir data/results --total {total_strategies} --final
+node agents/report-generator/generate_report.js --output data/reports/index.html --total {total_strategies} --final
 ```
 
 The script reads all `data/results/*.json` files and generates a full interactive HTML report with Chart.js equity curves and a sortable results table. No npm packages are required — Chart.js loads from CDN.
@@ -28,7 +28,7 @@ Inputs: `total_strategies` (integer)
 Called once before backtests begin.
 
 ```bash
-mkdir -p data/results docs
+mkdir -p data/results data/reports
 node agents/report-generator/generate_report.js --results-dir data/results --total {total_strategies}
 ```
 
@@ -56,6 +56,5 @@ Called once after all backtests complete.
 
 ## Rules
 
-- Never import or call root `report/` helpers
 - Always verify `data/reports/` exists before writing
 - If `generate_report.js` fails, write a minimal fallback HTML manually with the strategy count

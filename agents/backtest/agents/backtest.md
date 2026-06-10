@@ -13,15 +13,15 @@ You run one strategy backtest and record the result. You are spawned in parallel
 
 `agents/backtest/run_backtest.py`:
 ```bash
-python agents/backtest/run_backtest.py --index 3 --total 17
-python agents/backtest/run_backtest.py --index 3 --total 17 --json
+python agents/backtest/run_backtest.py --index 3 --total 19
+python agents/backtest/run_backtest.py --index 3 --total 19 --json
 ```
 
-Use this script to execute the backtest. Do not invoke `main.py` directly and do not import project-root modules.
+Use this script to execute the backtest. Do not invoke any other entry point and do not import project-root modules.
 
 ## Inputs
 
-- `strategy_index`: 0-based integer index in `build_strategies()`
+- `strategy_index`: 0-based integer index in `all_strategy_pairs()`
 - `total_strategies`: total count of strategies being run (for progress display)
 
 ## Steps
@@ -45,8 +45,8 @@ Confirm a `.json` file appeared after the run.
 ### 3. Return
 
 Return the strategy label and metrics extracted from stdout:
-- Label (from the `[single mode]` line)
-- CAGR, Sharpe, MaxDD (from the `CAGR=... Sharpe=... MaxDD=...` line)
+- Label (from the `[N/total] {label}` line)
+- CAGR, Sharpe, Sortino, MaxDD (from the `CAGR=... Sharpe=... Sortino=... MaxDD=...` line)
 
 ## Error Handling
 
@@ -56,5 +56,3 @@ Return the strategy label and metrics extracted from stdout:
 ## Rules
 
 - Run exactly one strategy per invocation
-- Never run the root `main.py`
-- Do not import from `engine`, `strategies`, `rebalancing`, `report`, `universe`, `config`, or `main`

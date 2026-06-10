@@ -68,7 +68,7 @@ Ask the user:
 Conduct a brief interview — ask only what is not already clear from their description:
 
 1. **What should it do?** — plain English description of the strategy logic
-2. **Which tickers?** — specific list, or picks from the full 32-instrument universe?
+2. **Which tickers?** — specific list, or picks from the full 80-ticker universe?
 3. **Signal** — what triggers a buy or sell? (momentum, moving average, DCA, fixed %, etc.)
 4. **Sizing** — equal weight, inverse volatility, fixed percentages, or 100% to one winner?
 5. **Fallback** — does it go to cash/bonds when the signal is off, or stay invested?

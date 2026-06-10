@@ -65,6 +65,4 @@ Report:
 ## Rules
 
 - Never modify any source files
-- Never call root `main.py`
-- Do not import from `universe`, `config`, `engine`, `strategies`, `rebalancing`, `report`, or `main`
 - If download fails completely, return status=`failed` with the error
