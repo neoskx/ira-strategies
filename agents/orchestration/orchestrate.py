@@ -129,6 +129,7 @@ def cmd_run(args):
                 "--index", str(s["index"]),
                 "--total", str(total),
                 "--results-dir", str(RESULTS_DIR),
+                "--window-stability",
                 "--json")
         success = r.returncode == 0 and "CAGR=" in r.stdout
         # update live report after each result

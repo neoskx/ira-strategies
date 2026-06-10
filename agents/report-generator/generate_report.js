@@ -632,7 +632,95 @@ function backtestMethodCard() {
   return `
   <div class="method-card">
     <div class="method-heading">Backtest Method</div>
-    <div class="method-copy">The backtest walks forward one trading day at a time. On each rebalance date it computes signals using only price history up to that day, then allocates the portfolio across the selected assets from the fixed universe. Prices are tracked with adjusted close for total-return accounting, and raw close is shown in the trade log when it differs.</div>
+    <div class="method-copy">The backtest walks forward one trading day at a time. On each rebalance date it computes signals using only price history up to that day, then allocates the portfolio across the selected assets from the fixed universe. Prices are tracked with adjusted close for total-return accounting, and raw close is shown in the trade log when it differs. The stability pass reruns each strategy on multiple trailing windows so you can see whether the ranking is holding up across different market regimes.</div>
+  </div>`;
+}
+
+function mean(values) {
+  if (!values.length) return null;
+  return values.reduce((sum, v) => sum + v, 0) / values.length;
+}
+
+function stdDev(values) {
+  if (values.length < 2) return 0;
+  const m = mean(values);
+  const variance = values.reduce((sum, v) => sum + ((v - m) ** 2), 0) / values.length;
+  return Math.sqrt(variance);
+}
+
+function median(values) {
+  if (!values.length) return null;
+  const sorted = values.slice().sort((a, b) => a - b);
+  const mid = Math.floor(sorted.length / 2);
+  return sorted.length % 2 ? sorted[mid] : (sorted[mid - 1] + sorted[mid]) / 2;
+}
+
+function windowStabilityCard(results) {
+  const windows = ['3Y', '5Y', '7Y', 'Full'];
+  const rows = results.map(r => {
+    const items = {};
+    for (const w of r.window_stability || []) {
+      items[w.window] = w;
+    }
+    const sharpeValues = windows.map(w => items[w]?.metrics?.sharpe).filter(v => typeof v === 'number' && !Number.isNaN(v));
+    if (!sharpeValues.length) return null;
+    const fullSharpe = items.Full?.metrics?.sharpe ?? r.metrics?.sharpe ?? null;
+    return {
+      label: r.label,
+      anchor: toAnchorId(r.label),
+      values: {
+        '3Y': items['3Y']?.metrics?.sharpe,
+        '5Y': items['5Y']?.metrics?.sharpe,
+        '7Y': items['7Y']?.metrics?.sharpe,
+        'Full': fullSharpe,
+      },
+      median: median(sharpeValues),
+      spread: stdDev(sharpeValues),
+    };
+  }).filter(Boolean).sort((a, b) => (b.median ?? -Infinity) - (a.median ?? -Infinity));
+
+  if (!rows.length) return '';
+
+  const scoreCell = v => {
+    if (v == null || Number.isNaN(v)) return '<td>—</td>';
+    return `<td class="${v >= 0 ? 'pos' : 'neg'}" data-val="${v}">${fmt.num(v)}</td>`;
+  };
+  const neutralCell = v => {
+    if (v == null || Number.isNaN(v)) return '<td>—</td>';
+    return `<td data-val="${v}">${fmt.num(v)}</td>`;
+  };
+
+  return `
+  <div class="stability-card">
+    <h2>Window Stability — Sharpe Across 3Y / 5Y / 7Y / Full</h2>
+    <div class="stability-note">Higher median Sharpe and lower spread indicate a strategy that stays more consistent as the backtest window changes. The current universe begins in 2016, so these are the longest comparable windows available without shrinking the asset list further.</div>
+    <div class="stability-wrap">
+      <table class="stability-table">
+        <thead>
+          <tr>
+            <th>Strategy</th>
+            <th>3Y</th>
+            <th>5Y</th>
+            <th>7Y</th>
+            <th>Full</th>
+            <th>Median</th>
+            <th>Std Dev</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${rows.map(row => `
+          <tr>
+            <td class="stability-label"><a class="strategy-anchor" href="#${row.anchor}">${row.label}</a></td>
+            ${scoreCell(row.values['3Y'])}
+            ${scoreCell(row.values['5Y'])}
+            ${scoreCell(row.values['7Y'])}
+            ${scoreCell(row.values['Full'])}
+            ${scoreCell(row.median)}
+            ${neutralCell(row.spread)}
+          </tr>`).join('')}
+        </tbody>
+      </table>
+    </div>
   </div>`;
 }
 
@@ -816,6 +904,19 @@ function generateHtml(results, total, isFinal, profile, mdMap, repoUrl) {
                       text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
     .method-copy { font-size: 0.82rem; color: #555; line-height: 1.55; }
 
+    .stability-card { background: white; border-radius: 14px; padding: 1.5rem;
+                      box-shadow: 0 1px 3px rgba(0,0,0,0.07); margin-bottom: 1.5rem; }
+    .stability-card h2 { font-size: 0.9rem; font-weight: 600; color: #444;
+                         text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.4rem; }
+    .stability-note { font-size: 0.76rem; color: #666; line-height: 1.5; margin-bottom: 0.85rem; }
+    .stability-wrap { overflow-x: auto; }
+    .stability-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+    .stability-table thead tr { border-bottom: 2px solid #eef0f4; }
+    .stability-table th { padding: 8px 10px; text-align: left; font-size: 0.72rem; color: #888;
+                          text-transform: uppercase; letter-spacing: 0.04em; white-space: nowrap; }
+    .stability-table td { padding: 8px 10px; border-bottom: 1px solid #f2f4f7; white-space: nowrap; }
+    .stability-label { font-weight: 600; color: #1a1a2e; max-width: 280px; overflow: hidden; text-overflow: ellipsis; }
+
     /* Table */
     .table-card { background: white; border-radius: 14px; padding: 1.5rem;
                   box-shadow: 0 1px 3px rgba(0,0,0,0.07); overflow-x: auto; }
@@ -965,6 +1066,7 @@ function generateHtml(results, total, isFinal, profile, mdMap, repoUrl) {
     ${summaryCards(results)}
     ${equityChart(results)}
     ${backtestMethodCard()}
+    ${windowStabilityCard(results)}
     ${profileContextCard(profile)}
 
     <div class="table-card">

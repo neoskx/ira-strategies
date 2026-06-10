@@ -23,7 +23,7 @@ import pandas as pd
 from backtest_core import (
     END_DATE, INITIAL_CAPITAL, START_DATE, TICKERS,
     Strategy, RebalanceRule, RULES,
-    fetch_prices, run_backtest, save_result,
+    fetch_prices, run_backtest, save_result, build_window_stability,
 )
 
 PROJECT_ROOT   = Path(__file__).resolve().parent.parent.parent
@@ -73,6 +73,9 @@ def main():
     parser.add_argument("--index", type=int, required=True)
     parser.add_argument("--total", type=int, required=True)
     parser.add_argument("--results-dir", default="data/results")
+    parser.add_argument("--start", default=START_DATE)
+    parser.add_argument("--end", default=END_DATE)
+    parser.add_argument("--window-stability", action="store_true")
     parser.add_argument("--json", action="store_true")
     args = parser.parse_args()
 
@@ -85,8 +88,19 @@ def main():
     label = f"{strategy.name} | {rule.name}"
     print(f"[{args.index + 1}/{args.total}] {label}", flush=True)
 
-    prices, raw_prices = fetch_prices(TICKERS, START_DATE, END_DATE, use_cache=True)
-    result = run_backtest(strategy, rule, prices, raw_prices, START_DATE, END_DATE, INITIAL_CAPITAL)
+    prices, raw_prices = fetch_prices(TICKERS, args.start, args.end, use_cache=True)
+    result = run_backtest(strategy, rule, prices, raw_prices, args.start, args.end, INITIAL_CAPITAL)
+    if args.window_stability:
+        result["window_stability"] = build_window_stability(
+            strategy,
+            rule,
+            prices,
+            raw_prices,
+            args.start,
+            args.end,
+            INITIAL_CAPITAL,
+            base_result=result,
+        )
     out_path = save_result(result, args.results_dir)
 
     m = result["metrics"]

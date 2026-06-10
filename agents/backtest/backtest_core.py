@@ -30,6 +30,7 @@ TRADING_DAYS_PER_YEAR = 252
 THRESHOLD_TIGHT = 0.05
 THRESHOLD_LOOSE = 0.10
 MIN_REBALANCE_INTERVAL_DAYS = 21
+WINDOW_STABILITY_YEARS = (3, 5, 7)
 
 ASSETS = [
     {"ticker": "QQQ",     "category": "Broad ETF"},
@@ -344,6 +345,7 @@ def run_backtest(strategy: Strategy, rebalance_rule: RebalanceRule,
         "strategy": strategy.name,
         "rebalance_rule": rebalance_rule.name,
         "label": f"{strategy.name} | {rebalance_rule.name}",
+        "backtest_window": {"start": start, "end": end},
         "equity": equity,
         "metrics": metrics,
         "rebalance_log": rebalance_log,
@@ -393,11 +395,13 @@ def save_result(result: dict, results_dir: str = "data/results") -> Path:
         "label": label,
         "strategy": result["strategy"],
         "rebalance_rule": result["rebalance_rule"],
+        "backtest_window": result.get("backtest_window", {}),
         "metrics": metrics,
         "equity_dates": [d.isoformat() for d in equity.index],
         "equity_values": [round(float(v), 2) for v in equity.values],
         "rebalance_log": result.get("rebalance_log", []),
         "benchmarks": result.get("benchmarks", []),
+        "window_stability": result.get("window_stability", []),
     }
     out_path = out_dir / f"{hashlib.md5(label.encode()).hexdigest()[:8]}.json"
     with open(out_path, "w") as f:
@@ -525,4 +529,49 @@ def _build_buy_and_hold_benchmark(
         "start_price": round(start_price, 4),
         "dates": [d.isoformat() for d in series.index],
         "values": [round(float(v), 2) for v in values.values],
+    }
+
+
+def build_window_stability(strategy: Strategy, rebalance_rule: RebalanceRule,
+                           prices: pd.DataFrame, raw_prices: pd.DataFrame | None,
+                           start: str, end: str,
+                           initial_capital: float = INITIAL_CAPITAL,
+                           base_result: dict | None = None) -> list[dict]:
+    stability: list[dict] = []
+    start_ts = pd.Timestamp(start)
+    end_ts = pd.Timestamp(end)
+
+    for years in WINDOW_STABILITY_YEARS:
+        window_start_ts = max(start_ts, end_ts - pd.DateOffset(years=years))
+        window_start = window_start_ts.date().isoformat()
+        if window_start >= end:
+            continue
+        window_result = run_backtest(strategy, rebalance_rule, prices, raw_prices,
+                                     window_start, end, initial_capital)
+        stability.append(_summarize_window_result(
+            label=f"{years}Y",
+            start=window_start,
+            end=end,
+            result=window_result,
+        ))
+
+    stability.append(_summarize_window_result(
+        label="Full",
+        start=start,
+        end=end,
+        result=base_result or run_backtest(strategy, rebalance_rule, prices, raw_prices, start, end, initial_capital),
+    ))
+    return stability
+
+
+def _summarize_window_result(label: str, start: str, end: str, result: dict) -> dict:
+    metrics = result.get("metrics", {})
+    keys = ("cagr", "sharpe", "sortino", "max_drawdown", "calmar", "volatility", "total_return",
+            "recovery_months", "best_year", "worst_year")
+    return {
+        "window": label,
+        "start": start,
+        "end": end,
+        "days": len(result.get("equity", [])),
+        "metrics": {k: metrics.get(k) for k in keys},
     }
